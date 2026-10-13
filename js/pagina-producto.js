@@ -26,10 +26,10 @@ const perfumes = {
         ],
         precios: {
             "3 ml": 17,
-            "5 ml": 27,
+            "5 ml": 25,
             "10 ml": 35
         },
-        precioCompleto: 180
+        precioCompleto: 165
     },
 
     "khamrah-clasico": {
@@ -44,7 +44,7 @@ const perfumes = {
             "5 ml": 25,
             "10 ml": 30
         },
-        precioCompleto: 160
+        precioCompleto: 150
     },
 
     "asad-bourbon": {
@@ -56,10 +56,10 @@ const perfumes = {
         ],
         precios: {
             "3 ml": 17,
-            "5 ml": 27,
+            "5 ml": 25,
             "10 ml": 35
         },
-        precioCompleto: 150
+        precioCompleto: 165
     },
 
     "9-pm": {
@@ -70,11 +70,11 @@ const perfumes = {
             "img/productos/5. 9 pm.png"
         ],
         precios: {
-            "3 ml": 17,
-            "5 ml": 27,
-            "10 ml": 35
+            "3 ml": 15,
+            "5 ml": 20,
+            "10 ml": 30
         },
-        precioCompleto: 170
+        precioCompleto: 150
     },
 
     "badee-al-oud-sublime": {
@@ -89,7 +89,7 @@ const perfumes = {
             "5 ml": 25,
             "10 ml": 30
         },
-        precioCompleto: 150
+        precioCompleto: 145
     },
 
     "yara-pink": {
@@ -104,7 +104,7 @@ const perfumes = {
             "5 ml": 25,
             "10 ml": 30
         },
-        precioCompleto: 140
+        precioCompleto: 145
     },
     
      "stronger-with-you-intensely": {
@@ -116,11 +116,11 @@ const perfumes = {
         ],
         precios: {
             "3 ml": 20,
-            "5 ml": 32,
+            "5 ml": 30,
             "10 ml": 55
         },
         agotados: ["3 ml", "5 ml", "10 ml"],
-        precioCompleto: 420
+        precioCompleto: 410
     },
 
     "valentino-born-in-roma-intense": {
@@ -133,10 +133,10 @@ const perfumes = {
         precios: {
             "3 ml": 25,
             "5 ml": 40,
-            "10 ml": 65
+            "10 ml": 60
         },
         agotados: ["3 ml", "5 ml", "10 ml"],
-        precioCompleto: 520
+        precioCompleto: 480
     },
 
     "le-beau-le-parfum": {
@@ -149,10 +149,10 @@ const perfumes = {
         precios: {
             "3 ml": 25,
             "5 ml": 40,
-            "10 ml": 65
+            "10 ml": 60
         },
         agotados: ["3 ml", "5 ml", "10 ml"],
-        precioCompleto: 450
+        precioCompleto: 400
     },
 
      "xerjoff-erba-pura": {
@@ -163,12 +163,12 @@ const perfumes = {
             "img/productos/11. Xerjoff Erba Pura.png"
         ],
         precios: {
-            "3 ml": 35,
+            "3 ml": 40,
             "5 ml": 55,
             "10 ml": 90
         },
         agotados: ["3 ml", "5 ml", "10 ml"],
-                precioCompleto: 950
+                precioCompleto: 820
     },
 
     "khamrah-qahwa": {
