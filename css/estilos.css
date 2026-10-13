@@ -1,0 +1,2096 @@
+/* CONFIGURACIÓN GENERAL */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: #111111;
+}
+
+/* CABECERA NEGRA */
+.cabecera {
+  width: 100%;
+  min-height: 82px;
+  padding: 12px 5%;
+  background: #050505;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  position: relative;
+  z-index: 100;
+}
+
+/* LOGO ORIGINAL */
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.marca img {
+  display: block;
+  width: 44px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.marca span {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+/* MENÚ PRINCIPAL */
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 38px;
+}
+
+.menu > a,
+.menu-catalogo > a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 12px 0;
+  transition: color 0.2s ease;
+}
+
+.menu > a:hover,
+.menu-catalogo > a:hover {
+  color: #c9ab72;
+}
+
+/* MENÚ DESPLEGABLE */
+.menu-catalogo {
+  position: relative;
+}
+
+.menu-catalogo > a span {
+  margin-left: 4px;
+  font-size: 16px;
+}
+
+.submenu {
+  position: absolute;
+  top: 100%;
+  left: -18px;
+  width: 190px;
+  padding: 8px 0;
+  background: #101010;
+  border: 1px solid #292929;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: 0.2s ease;
+}
+
+.menu-catalogo:hover .submenu,
+.menu-catalogo:focus-within .submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.submenu a {
+  display: block;
+  padding: 13px 18px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.submenu a:hover {
+  color: #c9ab72;
+  background: #1d1d1d;
+}
+
+/* BOTÓN BUSCADOR */
+.boton-buscar {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.boton-buscar span {
+  display: block;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  position: relative;
+}
+
+.boton-buscar span::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 2px;
+  background: #ffffff;
+  right: -6px;
+  bottom: -3px;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+/* Efecto dorado al pasar el puntero por la lupa */
+.boton-buscar {
+    transition: border-color 0.25s ease;
+}
+
+.boton-buscar span {
+    transition: border-color 0.25s ease;
+}
+
+.boton-buscar span::after {
+    transition: background 0.25s ease;
+}
+
+.boton-buscar:hover {
+    border-color: #c9ab72;
+}
+
+.boton-buscar:hover span {
+    border-color: #c9ab72;
+}
+
+.boton-buscar:hover span::after {
+    background: #c9ab72;
+}
+
+/* AJUSTE PARA PANTALLAS PEQUEÑAS */
+@media (max-width: 750px) {
+  .cabecera {
+    padding: 12px 4%;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .marca img {
+    width: 34px;
+    height: 42px;
+  }
+
+  .marca span {
+    font-size: 15px;
+  }
+
+  .menu {
+    order: 3;
+    width: 100%;
+    gap: 25px;
+    justify-content: center;
+  }
+
+  .menu > a,
+  .menu-catalogo > a {
+    font-size: 12px;
+  }
+
+  .boton-buscar {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* CARRUSEL DE BANNERS ABANTO */
+.carrusel {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.carrusel-contenedor {
+  display: flex;
+  width: 100%;
+  height: auto;
+}
+
+.carrusel-contenedor img {
+  display: block;
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  height: 410px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* FLECHAS DEL CARRUSEL */
+.carrusel {
+    position: relative;
+}
+
+.flecha-carrusel {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(70, 70, 70, 0.85);
+    color: #d0d0d0;
+    font-size: 34px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.2s ease;
+}
+
+.flecha-carrusel:hover {
+    background: rgba(90, 90, 90, 0.95);
+}
+
+.flecha-carrusel.anterior {
+    left: 14px;
+}
+
+.flecha-carrusel.siguiente {
+    right: 14px;
+}
+
+
+/* FRANJA DE MENSAJES ABANTO */
+.franja-mensajes {
+    width: 100%;
+    height: 42px;
+    overflow: hidden;
+    background: #111111;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+
+.franja-mensajes-contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.franja-mensajes-contenedor > span {
+    flex-shrink: 0;
+    text-align: center;
+}
+
+
+.franja-mensajes-contenedor span {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+
+.franja-mensajes-contenedor .precio-rojo {
+    color: #ff0000;
+}
+
+/* BARRA ESTÁTICA DEL CATÁLOGO */
+.titulo-catalogo {
+  width: 100%;
+  background: #ffffff;
+  padding: 24px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.titulo-catalogo::after {
+  content: "";
+  display: block;
+  width: 80%;
+  max-width: 1000px;
+  height: 1px;
+  background: #dedede;
+  margin: 24px auto 0;
+}
+
+.titulo-catalogo h2 {
+  margin: 0;
+  color: #080808;
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+}
+
+/* SUBTÍTULO DE PERFUMES ÁRABES */
+.subtitulo-arabes {
+  width: 100%;
+  background: #ffffff;
+  padding: 20px 40px;
+  text-align: left;
+}
+
+.subtitulo-arabes h2 {
+  margin: 0;
+  color: #080808;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercas none;
+}
+
+/* CUADRÍCULA DE PERFUMES ÁRABES */
+.productos-arabes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px 22px;
+  padding: 24px 40px 50px;
+  background: #ffffff;
+}
+
+.producto-arabe {
+    min-width: 0;
+    color: #080808;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.producto-imagen {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: #f7f7f7;
+  overflow: hidden;
+}
+
+.producto-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.producto-arabe:hover .producto-imagen img {
+    transform: scale(1.06);
+}
+
+.producto-arabe h3 {
+    margin: 14px 0px 6px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    line-height: 1.4;
+    text-decoration: none;
+    color: #080808;
+}
+
+.producto-arabe p {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.5px;
+    color: #3D3D3D;
+}
+.ver-todos-arabes {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #080808;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ver-todos-arabes span {
+  font-size: 24px;
+}
+
+@media (max-width: 750px) {
+  .productos-arabes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 20px 16px 35px;
+    gap: 26px 14px;
+  }
+}
+
+/* =====================================
+   DETALLE DEL PERFUME - ABANTO FRAGANCIAS
+===================================== */
+
+.detalle-perfume[hidden] {
+  display: none !important;
+}
+
+.detalle-perfume {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 35px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detalle-contenido {
+  position: relative;
+  width: 100%;
+  max-width: 950px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  background: #fff;
+  color: #080808;
+  padding: 35px;
+  border-radius: 4px;
+}
+
+.cerrar-detalle {
+  position: fixed;
+  top: 20px;
+  right: 25px;
+  z-index: 1002;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: #080808;
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.detalle-galeria {
+  position: relative;
+  min-width: 0;
+  text-align: center;
+}
+
+#imagen-detalle {
+  display: block;
+  width: 100%;
+  height: 430px;
+  object-fit: contain;
+  background: #f7f7f7;
+}
+
+#imagen-anterior,
+#imagen-siguiente {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+#imagen-anterior {
+  left: 10px;
+}
+
+#imagen-siguiente {
+  right: 10px;
+}
+
+#contador-imagenes {
+  color: #777;
+  font-size: 13px;
+}
+
+.detalle-informacion h2 {
+  margin: 0 0 15px;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+#precio-detalle {
+  color: #555;
+  font-size: 17px;
+}
+
+.detalle-informacion label {
+  display: block;
+  margin: 25px 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#tamano-perfume {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  background: #fff;
+  color: #080808;
+  font-size: 15px;
+}
+
+#precio-seleccionado {
+  margin: 20px 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+#comprar-whatsapp {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background: #111;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#comprar-whatsapp:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 700px) {
+  .detalle-perfume {
+    padding: 60px 14px 20px;
+    align-items: flex-start;
+  }
+
+  .detalle-contenido {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 20px;
+  }
+
+  #imagen-detalle {
+    height: 300px;
+  }
+
+  .detalle-informacion h2 {
+    font-size: 24px;
+  }
+
+  .cerrar-detalle {
+    top: 10px;
+    right: 12px;
+  }
+}
+
+/* =====================================
+   PÁGINA INDIVIDUAL DEL PERFUME
+===================================== */
+
+.pagina-producto {
+  margin: 0;
+  background: #fff;
+  color: #111;
+  font-family: Arial, sans-serif;
+}
+
+.pagina-producto .cabecera {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  min-height: 78px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 12px 5%;
+  background: #050505;
+}
+
+.pagina-producto .logo-enlace img {
+    display: block;
+    width: 300px;
+    max-width: 100%;
+    height: auto;
+}
+
+.pagina-producto .cabecera nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.pagina-producto .cabecera nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.detalle-pagina {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+.volver-catalogo {
+  display: inline-block;
+  margin-bottom: 30px;
+  color: #111;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.ficha-producto {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 55px;
+  align-items: start;
+}
+
+.galeria-producto {
+  position: relative;
+  min-width: 0;
+  text-align: center;
+}
+
+#foto-producto {
+  display: block;
+  width: 100%;
+  height: 440px;
+  object-fit: contain;
+  background: #f8f8f8;
+  border-radius: 12px;
+}
+
+.flecha-foto {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  background: #fff;
+  color: #111;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+#foto-anterior {
+  left: 12px;
+}
+
+#foto-siguiente {
+  right: 12px;
+}
+
+#numero-foto {
+  margin: 12px 0;
+  color: #777;
+  font-size: 12px;
+}
+
+.informacion-producto {
+  padding-top: 10px;
+}
+
+.marca-producto {
+  margin: 0 0 12px;
+  color: #777;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+#nombre-producto {
+  margin: 0 0 14px;
+  font-family: Georgia, serif;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+}
+
+#descripcion-producto {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.precio-principal {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 24px 0;
+}
+
+.precio-principal span {
+  color: #777;
+  font-size: 12px;
+}
+
+.precio-principal strong {
+  font-size: 26px;
+}
+
+.informacion-producto hr {
+  border: 0;
+  border-top: 1px solid #e5e5e5;
+  margin: 24px 0 18px;
+}
+
+.titulo-presentacion {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 13px;
+}
+
+.opciones-tamano {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.opcion-tamano {
+  min-height: 58px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  color: #111;
+  text-align: left;
+  cursor: pointer;
+}
+
+.opcion-tamano small,
+.opcion-completo small {
+  display: block;
+  margin-bottom: 5px;
+  color: #777;
+  font-size: 11px;
+}
+
+.opcion-tamano strong {
+  font-size: 14px;
+}
+
+.opcion-tamano.seleccionado {
+  border: 2px solid #111;
+  padding: 9px;
+}
+
+.opcion-completo {
+    margin-top: 22px;
+    padding: 16px;
+    border: 1px solid #d5e2d8;
+    border-radius: 12px;
+    background: #f5f8f5;
+}
+
+#elegir-completo {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 6px 0;
+  border: 0;
+  background: transparent;
+  color: #111;
+  text-align: left;
+  cursor: pointer;
+}
+
+#elegir-completo small {
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+#elegir-completo span strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+#elegir-completo span small {
+  font-size: 13px;
+}
+
+#precio-completo {
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+#elegir-completo.seleccionado {
+  outline: 2px solid #111;
+  outline-offset: 8px;
+}
+
+.boton-comprar {
+  width: 100%;
+  margin-top: 28px;
+  padding: 15px 20px;
+  border: 0;
+  border-radius: 30px;
+  background: #168d55;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.boton-comprar:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.nota-compra {
+  margin-top: 12px;
+  color: #777;
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 750px) {
+  .pagina-producto .cabecera {
+    flex-wrap: wrap;
+    padding: 14px 18px;
+  }
+
+  .pagina-producto .logo-enlace img {
+    width: 220px;
+  }
+
+  .pagina-producto .cabecera nav {
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .detalle-pagina {
+    padding: 24px 16px 40px;
+  }
+
+  .ficha-producto {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  #foto-producto {
+    height: 340px;
+  }
+}
+
+.linea-categoria {
+    width: 80%;
+    max-width: 1000px;
+    height: 1px;
+    background-color: #dedede;
+    margin: 24px auto;
+}
+
+/* CUADRÍCULA DE PERFUMES DE DISEÑADOR */
+.productos-disenador {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px 22px;
+    padding: 24px 40px 50px;
+    background: #ffffff;
+}
+
+.productos-disenador .ver-todos-arabes {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #080808;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.productos-disenador .flecha-ver-todos {
+    font-size: 24px;
+}
+
+@media (max-width: 750px) {
+    .productos-disenador {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 20px 16px 35px;
+        gap: 26px 14px;
+    }
+}
+
+/* SECCIÓN PERFUMES DE NICHO */
+.productos-nicho {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px 22px;
+    padding: 24px 40px 50px;
+    background: #ffffff;
+}
+
+.productos-nicho .producto-arabe {
+    min-width: 0;
+    width: 100%;
+}
+
+.productos-nicho .producto-imagen {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+}
+
+.productos-nicho .producto-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+@media (max-width: 750px) {
+    .productos-nicho {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 20px 16px 35px;
+        gap: 26px 14px;
+    }
+}
+
+/* FILTROS LATERALES DEL CATÁLOGO ÁRABE */
+.catalogo-arabes-pagina {
+    display: grid;
+    grid-template-columns: 227px minmax(0, 1fr);
+    align-items: start;
+    column-gap: 32px;
+    padding: 28px 40px 50px;
+    background: #fff;
+}
+
+.filtros-arabes {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.filtros-arabes > h3 {
+    margin: 0 0 10px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.filtros-arabes .filtro-grupo {
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid #dedede;
+}
+
+.filtros-arabes .filtro-grupo summary {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    list-style: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.filtros-arabes .filtro-grupo summary::-webkit-details-marker {
+    display: none;
+}
+
+.filtros-arabes .filtro-grupo summary::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    margin-right: 2px;
+    border-right: 1px solid #111;
+    border-bottom: 1px solid #111;
+    transform: rotate(45deg);
+    transition: transform .2s ease;
+}
+
+.filtros-arabes .filtro-grupo[open] summary::after {
+    transform: rotate(225deg);
+}
+
+.filtros-arabes .filtro-grupo label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    padding: 8px 0;
+    color: #333;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.filtros-arabes .filtro-grupo label:last-child {
+    padding-bottom: 16px;
+}
+
+.filtros-arabes .filtro-grupo input {
+    accent-color: #111;
+    margin: 0;
+}
+
+#limpiar-filtros {
+    margin-top: 18px;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid #111;
+    background: transparent;
+    color: #111;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.resultados-arabes {
+    min-width: 0;
+}
+
+@media (max-width: 750px) {
+    .catalogo-arabes-pagina {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 20px 16px 35px;
+    }
+}
+
+
+/* CUADRÍCULA DE PRODUCTOS ÁRABES */
+.resultados-arabes {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-content: start;
+    gap: 32px 22px;
+    min-width: 0;
+}
+
+.resultados-arabes .producto-arabe {
+    display: block;
+    min-width: 0;
+    color: #080808;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.resultados-arabes .producto-imagen {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: #f7f7f7;
+    overflow: hidden;
+}
+
+.resultados-arabes .producto-imagen img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform .4s ease;
+}
+
+.resultados-arabes .producto-arabe:hover .producto-imagen img {
+    transform: scale(1.06);
+}
+
+.resultados-arabes .producto-arabe h3 {
+    margin: 14px 0 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.4;
+    color: #080808;
+}
+
+.resultados-arabes .producto-arabe p {
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    color: #3d3d3d;
+}
+
+@media (max-width: 1050px) {
+    .resultados-arabes {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px 16px;
+    }
+}
+
+@media (max-width: 750px) {
+    .resultados-arabes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 26px 14px;
+    }
+}
+
+/* Ocultar productos que no coinciden con los filtros */
+.resultados-arabes .producto-arabe[hidden] {
+    display: none !important;
+}
+
+/* Mensaje cuando no hay coincidencias */
+#sin-resultados-arabes {
+    grid-column: 1 / -1;
+    padding: 30px 10px;
+    text-align: center;
+    color: #555;
+}
+
+#sin-resultados-arabes[hidden] {
+    display: none !important;
+}
+
+/* ========================================
+   BUSCADOR PREMIUM — ABANTO FRAGANCIAS
+======================================== */
+
+.buscador-web {
+    position: static;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.panel-buscador {
+    position: absolute;
+    top: 100%;
+    right: calc(5% + 62px);
+    transform: none;
+    width: 340px;
+    max-width: calc(100vw - 40px);
+    padding: 15px;
+    background: rgba(17, 16, 14, 0.58);
+    color: #f5f0e7;
+    border: 1px solid rgba(201, 171, 114, 0.35);
+    border-radius: 3px;
+    box-shadow: 0 22px 65px rgba(0, 0, 0, 0.22);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    z-index: 1000;
+}
+
+
+.panel-buscador[hidden] {
+    display: none !important;
+}
+
+#campo-busqueda {
+    width: 100%;
+    height: 54px;
+    padding: 0 48px 0 18px;
+    color: 	#0A0A0A;
+    border: 1px solid #d8d6b7;
+    border-radius: 2px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.25s ease,
+                background 0.25s ease;
+}
+
+#campo-busqueda::placeholder {
+    color: #b6ad9e;
+}
+
+#campo-busqueda:focus {
+    border-color: #d8d6b7;
+    background: #FFFFFF;
+}
+
+#resultados-busqueda {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px 14px;
+    margin-top: 24px;
+}
+
+.resultado-busqueda {
+    display: block;
+    min-width: 0;
+    color: #f5f0e7;
+    text-decoration: none;
+    animation: aparecerPerfume 0.3s ease both;
+}
+
+.resultado-busqueda img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: contain;
+    background: #f7f5f0;
+    border: none;
+    box-sizing: border-box;
+    transition: border-color 0.25s ease,
+                transform 0.25s ease;
+}
+
+.resultado-busqueda:hover img {
+    border-color: #c9ab72;
+    transform: translateY(-3px);
+}
+
+.resultado-busqueda h3 {
+    margin: 11px 0 7px;
+    color: #f5f0e7;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.resultado-busqueda p {
+    margin: 0;
+    color: #d5bd8d;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.mensaje-buscador {
+    grid-column: 1 / -1;
+    padding: 20px 0;
+    color: #c8bead;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+@keyframes aparecerPerfume {
+    from {
+        opacity: 0;
+        transform: translateY(7px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+    .panel-buscador {
+        position: fixed;
+        top: 90px;
+        left: 12px;
+        right: 12px;
+        width: auto;
+        max-width: none;
+        max-height: calc(100vh - 115px);
+        overflow-y: auto;
+        padding: 18px;
+    }
+
+    #resultados-busqueda {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px 12px;
+    }
+}
+
+/* SECCIÓN NUESTROS CLIENTES */
+.nuestros-clientes {
+    width: 100%;
+    padding: 65px 5% 70px;
+    background: #F7F7F7;
+    box-sizing: border-box;
+}
+
+.contenedor-clientes {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.nuestros-clientes h2 {
+    margin: 0;
+    text-align: center;
+    color: #111;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 23px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.nuestros-clientes h2::after {
+    content: "";
+    display: block;
+    width: 270px;
+    height: 1px;
+    background: #222;
+    margin: 12px auto 0;
+}
+
+.descripcion-clientes {
+    margin: 18px 0 35px;
+    text-align: center;
+    color: #777777;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* CARRUSEL DE NUESTROS CLIENTES */
+.galeria-clientes {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 25px 0 30px;
+    cursor: grab;
+    user-select: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+}
+
+.galeria-clientes::-webkit-scrollbar {
+    display: none;
+}
+
+.galeria-clientes:active {
+    cursor: grabbing;
+}
+
+.galeria-clientes.arrastrando img {
+    transition: none;
+}
+
+
+/* TARJETAS CON FOTOGRAFÍAS */
+.galeria-clientes {
+    position: relative;
+    z-index: 1;
+}
+
+.galeria-clientes img {
+    flex: 0 0 280px;
+    width: 280px;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+    border-radius: 3px;
+    pointer-events: none;
+    -webkit-user-drag: none;
+    scroll-snap-align: center;
+    opacity: 0.72;
+    transform: scale(0.94);
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+    transition:
+        transform 0.35s ease,
+        opacity 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.galeria-clientes img.tarjeta-destacada {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* INDICADORES */
+.indicadores-clientes {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    margin-top: 5px;
+}
+
+.indicador-cliente {
+    width: 7px;
+    height: 7px;
+    min-width: 7px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #c7c7c7;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.indicador-cliente.activo {
+    background: #222222;
+    transform: scale(1.2);
+}
+
+.indicador-cliente:hover {
+    background: #888888;
+}
+
+.nuestros-clientes {
+    position: relative;
+    isolation: isolate;
+}
+
+@media (max-width: 600px) {
+    .galeria-clientes {
+        gap: 14px;
+        padding: 20px 0 25px;
+    }
+
+    .galeria-clientes img {
+        flex-basis: 230px;
+        width: 230px;
+        height: 290px;
+    }
+
+    .nuestros-clientes {
+        padding: 45px 5% 50px;
+    }
+
+    .nuestros-clientes h2 {
+        font-size: 23px;
+    }
+}
+
+/* SECCIÓN PREGUNTAS FRECUENTES */
+.preguntas-frecuentes {
+    width: 100%;
+    padding: 65px 5% 40px;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.contenedor-preguntas {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.preguntas-frecuentes h2 {
+    margin: 0 auto;
+    display: table;
+    text-align: center;
+    color: #111;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 23px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+/* LISTA DE PREGUNTAS FRECUENTES */
+.lista-preguntas {
+    max-width: 900px;
+    margin: 45px auto 0;
+}
+
+.pregunta {
+    border-bottom: 1px solid #dedede;
+}
+
+.pregunta:first-child {
+    border-top: 1px solid #dedede;
+}
+
+.pregunta summary {
+    position: relative;
+    padding: 22px 40px 22px 5px;
+    color: #171717;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    list-style: none;
+    cursor: pointer;
+}
+
+.pregunta summary::-webkit-details-marker {
+    display: none;
+}
+
+.pregunta summary::after {
+    content: "+";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    font-weight: 400;
+    color: #333;
+}
+
+.pregunta[open] summary::after {
+    content: "−";
+}
+
+.respuesta {
+    padding: 0 25px 20px 5px;
+    color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.respuesta p {
+    margin: 0 0 10px;
+}
+
+.respuesta ul {
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
+.respuesta li {
+    margin-bottom: 5px;
+}
+
+.respuesta strong {
+    color: #222;
+    font-weight: 600;
+}
+
+.respuesta .nota-respuesta {
+    margin-top: 12px;
+    color: #888;
+    font-size: 12px;
+    font-style: italic;
+}
+
+@media (max-width: 600px) {
+    .preguntas-frecuentes {
+        padding: 45px 5% 40px;
+    }
+
+    .preguntas-frecuentes h2 {
+        font-size: 20px;
+        letter-spacing: 3px;
+    }
+
+    .lista-preguntas {
+        margin-top: 32px;
+    }
+
+    .pregunta summary {
+        padding: 19px 35px 19px 2px;
+        font-size: 14px;
+    }
+
+    .respuesta {
+        padding-right: 5px;
+        font-size: 13px;
+    }
+}
+/* SECCIÓN VIDEO PROMOCIONAL */
+.video-promocional {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #000;
+    overflow: hidden;
+}
+
+.contenedor-video {
+    width: 100%;
+    height: 600px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.video-marca {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+@media (max-width: 768px) {
+    .contenedor-video {
+        height: 350px;
+    }
+}
+
+/* ================================
+   PIE DE PÁGINA - ABANTO FRAGANCIAS
+================================ */
+
+.pie-pagina {
+    width: 100%;
+    background: #050505;
+    color: #f5f5f5;
+    padding: 55px 7% 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.contenido-pie {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 0.9fr 1fr 1.1fr;
+    gap: 45px;
+}
+
+.columna-pie {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.columna-pie h3 {
+    margin: 0 0 22px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.columna-pie p {
+    margin: 0 0 18px;
+    color: #f0d995;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.columna-pie a {
+    width: fit-content;
+    margin-bottom: 15px;
+    color: #f0d995;
+    font-size: 14px;
+    line-height: 1.5;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    overflow-wrap: anywhere;
+}
+
+.columna-pie a:hover {
+    color: #f0d995;
+}
+
+.columna-pie .enlace-nosotros {
+    color: #f0d995;
+    font-weight: 600;
+    border-bottom: 1px solid #999;
+    padding-bottom: 4px;
+}
+
+.columna-pie .titulo-redes {
+    margin-top: 22px;
+    margin-bottom: 16px;
+}
+
+
+.redes-sociales {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.columna-pie .redes-sociales .icono-red {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid #f0d995;
+    border-radius: 50%;
+    background: #f0d995;
+    color: #050505;
+    text-decoration: none;
+    transition: background 0.3s ease,
+                color 0.3s ease,
+                transform 0.3s ease;
+}
+
+.redes-sociales .icono-red svg {
+    width: 28px;
+    height: 28px;
+    display: block;
+}
+
+.columna-pie .redes-sociales .icono-red:hover {
+    background: transparent;
+    color: #f0d995;
+    transform: translateY(-2px);
+}
+
+.derechos-pie {
+    width: 100%;
+    max-width: 1400px;
+    margin: 45px auto 0;
+    padding: 22px 0;
+    border-top: 1px solid #242424;
+    color: #888;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* ADAPTACIÓN A TABLETS */
+@media (max-width: 1000px) {
+    .contenido-pie {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 40px;
+    }
+}
+
+/* ADAPTACIÓN A CELULARES */
+@media (max-width: 600px) {
+    .pie-pagina {
+        padding: 40px 6% 0;
+    }
+
+    .contenido-pie {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .columna-pie h3 {
+        font-size: 17px;
+        margin-bottom: 15px;
+    }
+
+    .columna-pie p {
+        font-size: 14px;
+    }
+
+    .derechos-pie {
+        margin-top: 35px;
+        line-height: 1.7;
+    }
+}
+
+/* NÚMERO TELEFÓNICO SUBRAYADO */
+.columna-pie a.telefono-pie {
+    color: #f0d995;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+
+/* AJUSTES FINALES DE LOS ENLACES DEL PIE */
+.columna-pie a:not(.icono-red) {
+    color: #f0d995;
+    font-size: 15px;
+}
+
+.columna-pie a:not(.icono-red):hover {
+    color: #ffffff;
+}
+
+/* TELÉFONO Y CORREO SUBRAYADOS */
+.columna-pie a.telefono-pie,
+.columna-pie a.correo-pie {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* BOTÓN FLOTANTE DE WHATSAPP */
+.whatsapp-flotante {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    z-index: 9999;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #20c963;
+    color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    transition: transform 0.25s ease,
+                background 0.25s ease;
+}
+
+.whatsapp-flotante svg {
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+.whatsapp-flotante:hover {
+    background: #19b857;
+    transform: scale(1.06);
+}
+
+@media (max-width: 600px) {
+    .whatsapp-flotante {
+        right: 16px;
+        bottom: 18px;
+        width: 52px;
+        height: 52px;
+    }
+
+    .whatsapp-flotante svg {
+        width: 29px;
+        height: 29px;
+    }
+}
+
+/* PÁGINA DE CONTACTOS */
+.pagina-contactos {
+    padding: 75px 7% 90px;
+    background: #fff;
+    color: #111;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.encabezado-contactos {
+    max-width: 760px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+.etiqueta-contactos {
+    color: #a58a45;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 4px;
+}
+
+.encabezado-contactos h1 {
+    margin: 18px 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(30px, 4vw, 46px);
+    font-weight: 600;
+}
+
+.encabezado-contactos > p:last-child {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.contenido-contactos {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.tarjeta-contacto {
+    padding: 30px;
+    border: 1px solid #e5e0d4;
+    background: #fff;
+}
+
+.tarjeta-contacto h2 {
+    margin: 0 0 14px;
+    font-size: 19px;
+    color: #111;
+}
+
+.tarjeta-contacto p {
+    margin: 0 0 20px;
+    color: #666;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.tarjeta-contacto a {
+    display: block;
+    width: fit-content;
+    margin-top: 10px;
+    color: #9a7b32;
+    font-size: 17px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 650px) {
+    .pagina-contactos {
+        padding: 50px 6% 60px;
+    }
+
+    .contenido-contactos {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .tarjeta-contacto {
+        padding: 24px;
+    }
+}
+
+
+/* PÁGINA NOSOTROS */
+.pagina-nosotros {
+    padding: 75px 7% 90px;
+    background: #fff;
+    color: #111;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.encabezado-nosotros {
+    max-width: 850px;
+    margin: 0 auto 60px;
+    text-align: center;
+}
+
+.encabezado-nosotros h1 {
+    margin: 0 0 22px;
+    font-size: clamp(30px, 4vw, 46px);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.encabezado-nosotros p {
+    color: #666;
+    font-size: 17px;
+    line-height: 1.9;
+}
+
+.contenido-nosotros {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.bloque-nosotros {
+    padding: 28px 0;
+    border-bottom: 1px solid #e5e0d4;
+}
+
+.bloque-nosotros h2 {
+    margin: 0 0 15px;
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.bloque-nosotros p {
+    margin: 0;
+    color: #666;
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+.boton-nosotros {
+    margin-top: 35px;
+    text-align: center;
+}
+
+.boton-nosotros a {
+    display: inline-block;
+    padding: 15px 25px;
+    background: #f0d995;
+    color: #050505;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.boton-nosotros a:hover {
+    background: #e4c979;
+}
+
+@media (max-width: 600px) {
+    .pagina-nosotros {
+        padding: 50px 6% 60px;
+    }
+
+    .encabezado-nosotros {
+        margin-bottom: 35px;
+    }
+
+    .encabezado-nosotros p {
+        font-size: 15px;
+    }
+
+    .bloque-nosotros h2 {
+        font-size: 20px;
+    }
+
+    .bloque-nosotros p {
+        font-size: 15px;
+    }
+}
+
+.producto-imagen {
+    position: relative;
+}
+
+.etiqueta-agotado {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+    background: #d60000;
+    color: #ffffff;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.producto-agotado .producto-imagen img {
+    opacity: 0.65;
+}
+
+/* Presentaciones agotadas */
+.opcion-tamano.agotado {
+    color: #d60000;
+    border: 1px solid #d60000;
+    background: #fff0f0;
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+.opcion-tamano.agotado strong {
+    color: #d60000;
+    font-size: 12px;
+}
+
