@@ -8,14 +8,27 @@
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
+    
+<header class="cabecera">
+    <button
+        class="boton-menu-movil"
+        id="botonMenuMovil"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="menuPrincipal"
+    >
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 
-    <header class="cabecera">
-        <a href="index.html" class="marca">
+    <a href="index.html" class="marca">
             <img src="img/logo.png" alt="Abanto Fragancias">
             <span>ABANTO FRAGANCIAS</span>
         </a>
 
-        <nav class="menu">
+        <nav class="menu" id="menuPrincipal">
             <a href="index.html">INICIO</a>
 
             <div class="menu-catalogo">
@@ -62,7 +75,11 @@
 
         <section class="catalogo-arabes-pagina">
 
-    
+ <button type="button" class="boton-abrir-filtros" id="botonAbrirFiltros">
+    <span class="icono-filtro">☷</span>
+    Filtrar
+</button>
+
 <aside class="filtros-arabes">
 
     <details class="filtro-grupo">
@@ -481,6 +498,18 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const filtros = document.querySelector(".filtros-arabes");
+const botonAbrirFiltros = document.getElementById("botonAbrirFiltros");
+
+if (botonAbrirFiltros && filtros) {
+    botonAbrirFiltros.addEventListener("click", () => {
+        const abiertos = filtros.classList.toggle("filtros-movil-abiertos");
+
+        botonAbrirFiltros.setAttribute("aria-expanded", String(abiertos));
+        botonAbrirFiltros.innerHTML = abiertos
+            ? '<span class="icono-filtro">✕</span> Cerrar filtros'
+            : '<span class="icono-filtro">☷</span> Filtrar';
+    });
+}
     const productos = [
         ...document.querySelectorAll(".resultados-arabes .producto-arabe")
     ];
@@ -573,8 +602,8 @@ productos.forEach(producto => {
     aplicarFiltros();
 });
 </script>
-
 <script src="js/buscador.js"></script>
+<script src="js/menu-movil.js"></script>
 
 <!-- PIE DE PÁGINA -->
 <footer class="pie-pagina">

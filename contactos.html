@@ -11,41 +11,61 @@
 <body>
 
     <header class="cabecera">
-        <a href="index.html" class="marca">
-            <img src="img/logo.png" alt="Abanto Fragancias">
-            <span>ABANTO FRAGANCIAS</span>
-        </a>
+    <button
+        class="boton-menu-movil"
+        id="botonMenuMovil"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="menuPrincipal"
+    >
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 
-        <nav class="menu">
-            <a href="index.html">INICIO</a>
+    <a href="index.html" class="marca">
+        <img src="img/logo.png" alt="Abanto Fragancias">
+        <span>ABANTO FRAGANCIAS</span>
+    </a>
 
-            <div class="menu-catalogo">
-                <a href="#" onclick="return false;">CATÁLOGO <span>⌄</span></a>
-                <div class="submenu">
-                    <a href="perfumes-arabes.html">Árabes</a>
-                    <a href="perfumes-disenador.html">Diseñador</a>
-                    <a href="producto.html?producto=xerjoff-erba-pura">Nicho</a>
-                </div>
-            </div>
+    <nav class="menu" id="menuPrincipal">
+        <a href="index.html">INICIO</a>
 
-            <a href="contactos.html">CONTACTOS</a>
-            <a href="nosotros.html">NOSOTROS</a>
-        </nav>
-
-        <div class="buscador-web">
-            <button class="boton-buscar" id="abrir-buscador"
-                    type="button" aria-label="Buscar perfumes">
-                <span></span>
-            </button>
-
-            <div class="panel-buscador" id="panel-buscador" hidden>
-                <input type="search" id="campo-busqueda"
-                       placeholder="¿Qué perfume estás buscando?"
-                       autocomplete="off">
-                <div id="resultados-busqueda"></div>
+        <div class="menu-catalogo">
+            <a href="#" onclick="return false;">CATÁLOGO <span>⌄</span></a>
+            <div class="submenu">
+                <a href="perfumes-arabes.html">Árabes</a>
+                <a href="perfumes-disenador.html">Diseñador</a>
+                <a href="producto.html?producto=xerjoff-erba-pura">Nicho</a>
             </div>
         </div>
-    </header>
+
+        <a href="contactos.html">CONTACTOS</a>
+        <a href="nosotros.html">NOSOTROS</a>
+    </nav>
+
+    <div class="buscador-web">
+        <button
+            class="boton-buscar"
+            id="abrir-buscador"
+            type="button"
+            aria-label="Buscar perfumes"
+        >
+            <span></span>
+        </button>
+
+        <div class="panel-buscador" id="panel-buscador" hidden>
+            <input
+                type="search"
+                id="campo-busqueda"
+                placeholder="¿Qué perfume estás buscando?"
+                autocomplete="off"
+            >
+            <div id="resultados-busqueda"></div>
+        </div>
+    </div>
+</header>
 
     <main class="pagina-contactos">
         <section class="encabezado-contactos">
@@ -179,5 +199,6 @@
 </a>
 
     <script src="js/buscador.js"></script>
+    <script src="js/menu-movil.js"></script>
 </body>
 </html>

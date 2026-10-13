@@ -2104,9 +2104,9 @@ body {
     .carrusel-contenedor img {
         width: 100%;
         max-width: 100%;
-        height: auto;
-        aspect-ratio: 1344 / 410;
-        object-fit: contain;
+        height: 105px;
+        aspect-ratio: auto;
+        object-fit: cover;
         object-position: center;
         flex: 0 0 100%;
     }
@@ -2123,5 +2123,222 @@ body {
 
     .flecha-carrusel.siguiente {
         right: 8px;
+    }
+}
+
+/* MENU MOVIL DE ABANTO FRAGANCIAS */
+.boton-menu-movil {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .cabecera {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr) 42px;
+        align-items: center;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .boton-menu-movil {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .boton-menu-movil span {
+        display: block;
+        width: 28px;
+        height: 2px;
+        background: #fff;
+        border-radius: 2px;
+    }
+
+    .cabecera .marca {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: center;
+        min-width: 0;
+        gap: 6px;
+    }
+
+    .cabecera .marca img {
+        width: 30px;
+        height: 38px;
+        object-fit: contain;
+    }
+
+    .cabecera .marca span {
+        font-size: 13px;
+        line-height: 1.2;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .cabecera .boton-buscar,
+    .cabecera .buscador-web {
+        grid-column: 3;
+        grid-row: 1;
+        justify-self: end;
+    }
+
+    .cabecera .menu {
+        display: none;
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding-top: 8px;
+    }
+
+    .cabecera .menu.menu-movil-abierto {
+        display: flex;
+    }
+
+    .cabecera .menu > a,
+    .cabecera .menu .menu-catalogo > a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 8px;
+        font-size: 14px;
+        white-space: normal;
+    }
+
+    .cabecera .menu .menu-catalogo {
+        width: 100%;
+    }
+
+    .cabecera .menu .submenu {
+        position: static;
+        display: none;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .cabecera .menu .menu-catalogo:hover .submenu,
+    .cabecera .menu .menu-catalogo:focus-within .submenu {
+        display: flex;
+        flex-direction: column;
+    }
+}
+/* REDUCIR LUPA EN MOVIL */
+@media (max-width: 600px) {
+    .cabecera .boton-buscar {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        padding: 0;
+    }
+
+    .cabecera .boton-buscar span {
+        transform: scale(0.78);
+        transform-origin: center;
+        position: relative;
+left: -1px;
+top: -2px;
+    }
+}
+
+/* REDUCIR ALTURA DE LA FRANJA EN MOVILES */
+@media (max-width: 600px) {
+    .franja-mensajes {
+        height: 17px;
+        min-height: 17px;
+    }
+
+    .franja-mensajes-contenedor {
+        min-height: 17px;
+    }
+
+    .franja-mensajes-contenedor span {
+        font-size: 8px;
+        letter-spacing: 1px;
+    }
+}
+
+/* BOTON FILTRAR PARA CATALOGO MOVIL */
+.boton-abrir-filtros {
+    display: none;
+}
+
+@media (max-width: 750px) {
+    .boton-abrir-filtros {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: fit-content;
+        min-width: 120px;
+        height: 44px;
+        margin: 0 0 18px 16px;
+        padding: 0 18px;
+        border: 1px solid #e5e0d6;
+        background: #ffffff;
+        color: #111111;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .boton-abrir-filtros .icono-filtro {
+        font-size: 19px;
+        line-height: 1;
+    }
+
+    .catalogo-arabes-pagina {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .filtros-arabes {
+        display: none;
+        width: calc(100% - 32px);
+        margin: 0 16px 22px;
+        padding: 8px 14px;
+        border: 1px solid #e8e5df;
+        background: #ffffff;
+    }
+
+    .filtros-arabes.filtros-movil-abiertos {
+        display: block;
+    }
+
+    .filtros-arabes .filtro-grupo summary {
+        min-height: 46px;
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+
+    .filtros-arabes .filtro-grupo label {
+        padding: 10px 2px;
+        font-size: 14px;
+    }
+
+    .filtros-arabes .filtro-grupo input {
+        width: 16px;
+        height: 16px;
+        accent-color: #111111;
+    }
+
+    #limpiar-filtros {
+        margin: 14px 0 8px;
+        font-size: 11px;
     }
 }

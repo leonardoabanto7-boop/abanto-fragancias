@@ -10,12 +10,25 @@
 <body>
 
   <header class="cabecera">
+    <button
+    class="boton-menu-movil"
+    id="botonMenuMovil"
+    type="button"
+    aria-label="Abrir menú"
+    aria-expanded="false"
+    aria-controls="menuPrincipal"
+>
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
     <a href="#inicio" class="marca">
+        
       <img src="img/logo.png" alt="Abanto Fragancias">
       <span>ABANTO FRAGANCIAS</span>
     </a>
 
-    <nav class="menu">
+    <nav class="menu" id="menuPrincipal">
       <a href="index.html">INICIO</a>
 
       <div class="menu-catalogo">
@@ -407,6 +420,7 @@
 
 <script src="js/carrusel.js"></script>
 <script src="js/buscador.js"></script>
+<script src="js/menu-movil.js"></script>
 <script src="js/galeria-clientes.js"></script>
 <script src="js/videos.js"></script>
 </body>
