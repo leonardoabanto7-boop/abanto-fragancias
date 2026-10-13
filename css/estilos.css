@@ -2094,3 +2094,34 @@ body {
     font-size: 12px;
 }
 
+/* AJUSTE RESPONSIVE DEL CARRUSEL PRINCIPAL */
+@media (max-width: 750px) {
+    .carrusel {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .carrusel-contenedor img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 1344 / 410;
+        object-fit: contain;
+        object-position: center;
+        flex: 0 0 100%;
+    }
+
+    .flecha-carrusel {
+        width: 36px;
+        height: 36px;
+        font-size: 27px;
+    }
+
+    .flecha-carrusel.anterior {
+        left: 8px;
+    }
+
+    .flecha-carrusel.siguiente {
+        right: 8px;
+    }
+}
