@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración | Abanto Fragancias</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <main style="max-width: 700px; margin: 60px auto; padding: 24px; font-family: Arial, sans-serif;">
+        <h1>Abanto Fragancias</h1>
+        <h2>Panel de administración</h2>
+        <p>Acceso privado para gestionar perfumes, precios, imágenes y disponibilidad.</p>
+
+        <section id="acceso">
+            <h3>Iniciar sesión</h3>
+            <label for="correo">Correo electrónico</label>
+            <input id="correo" type="email" autocomplete="username" required
+                style="display:block; width:100%; padding:12px; margin:8px 0 16px; box-sizing:border-box;">
+
+            <label for="contrasena">Contraseña</label>
+            <input id="contrasena" type="password" autocomplete="current-password" required
+                style="display:block; width:100%; padding:12px; margin:8px 0 16px; box-sizing:border-box;">
+
+            <button id="iniciarSesion" type="button" style="padding:12px 20px;">
+                Iniciar sesión
+            </button>
+            <p id="mensaje" role="status"></p>
+        </section>
+    </main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    const SUPABASE_URL = "https://vvntaanbzaqlkretsrg.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_yLVoioG4a-nA_KkJ1wQzTQ_kr_9WYnH";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+supabaseClient.auth.onAuthStateChange((event, session) => {
+    if (event === "PASSWORD_RECOVERY") {
+        document.getElementById("acceso").innerHTML = `
+            <h3>Restablecer contraseña</h3>
+            <p>Ingresa tu nueva contraseña.</p>
+
+            <label for="nuevaContrasena">Nueva contraseña</label>
+            <input id="nuevaContrasena" type="password"
+                autocomplete="new-password"
+                style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box;">
+
+            <label for="confirmarContrasena">Confirmar contraseña</label>
+            <input id="confirmarContrasena" type="password"
+                autocomplete="new-password"
+                style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box;">
+
+            <button id="guardarContrasena" type="button">
+                Guardar nueva contraseña
+            </button>
+
+            <p id="mensajeRecuperacion" role="status"></p>
+        `;
+
+        document.getElementById("guardarContrasena").onclick = async () => {
+            const nueva = document.getElementById("nuevaContrasena").value;
+            const confirmar = document.getElementById("confirmarContrasena").value;
+            const aviso = document.getElementById("mensajeRecuperacion");
+
+            if (nueva.length < 8) {
+                aviso.textContent = "Usa al menos 8 caracteres.";
+                return;
+            }
+
+            if (nueva !== confirmar) {
+                aviso.textContent = "Las contraseñas no coinciden.";
+                return;
+            }
+
+            const { error } = await supabaseClient.auth.updateUser({
+                password: nueva
+            });
+
+            if (error) {
+                aviso.textContent = "Error: " + error.message;
+                return;
+            }
+
+            await supabaseClient.auth.signOut();
+            aviso.textContent = "Contraseña actualizada. Ya puedes iniciar sesión.";
+        };
+    }
+});
+    const boton = document.getElementById("iniciarSesion");
+    const params = new URLSearchParams(window.location.hash.substring(1));
+
+if (params.get("type") === "recovery") {
+    document.getElementById("acceso").innerHTML = `
+        <h3>Restablecer contraseña</h3>
+        <p>Ingresa tu nueva contraseña para acceder al panel.</p>
+
+        <label for="nuevaContrasena">Nueva contraseña</label>
+        <input id="nuevaContrasena" type="password"
+            autocomplete="new-password" required
+            style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box;">
+
+        <label for="confirmarContrasena">Confirmar contraseña</label>
+        <input id="confirmarContrasena" type="password"
+            autocomplete="new-password" required
+            style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box;">
+
+        <button id="guardarContrasena" type="button" style="padding:12px 20px;">
+            Guardar nueva contraseña
+        </button>
+
+        <p id="mensajeRecuperacion" role="status"></p>
+    `;
+
+    document.getElementById("guardarContrasena").addEventListener("click", async () => {
+        const nueva = document.getElementById("nuevaContrasena").value;
+        const confirmar = document.getElementById("confirmarContrasena").value;
+        const mensajeRecuperacion = document.getElementById("mensajeRecuperacion");
+        const botonGuardar = document.getElementById("guardarContrasena");
+
+        if (nueva.length < 8) {
+            mensajeRecuperacion.textContent = "La contraseña debe tener al menos 8 caracteres.";
+            return;
+        }
+
+        if (nueva !== confirmar) {
+            mensajeRecuperacion.textContent = "Las contraseñas no coinciden.";
+            return;
+        }
+
+        botonGuardar.disabled = true;
+        mensajeRecuperacion.textContent = "Guardando contraseña...";
+
+        const { error } = await supabaseClient.auth.updateUser({
+            password: nueva
+        });
+
+        botonGuardar.disabled = false;
+
+        if (error) {
+            mensajeRecuperacion.textContent =
+                "No se pudo cambiar la contraseña: " + error.message;
+            return;
+        }
+
+        await supabaseClient.auth.signOut();
+
+        mensajeRecuperacion.textContent =
+            "¡Contraseña actualizada! Ya puedes iniciar sesión con tu nueva contraseña.";
+    });
+}
+    const mensaje = document.getElementById("mensaje");
+
+    boton.addEventListener("click", async () => {
+        const correo = document.getElementById("correo").value.trim();
+        const contrasena = document.getElementById("contrasena").value;
+
+        if (!correo || !contrasena) {
+            mensaje.textContent = "Ingresa tu correo y contraseña.";
+            return;
+        }
+
+        boton.disabled = true;
+        mensaje.textContent = "Verificando acceso...";
+
+        const { data, error } =
+            await supabaseClient.auth.signInWithPassword({
+                email: correo,
+                password: contrasena
+            });
+
+        boton.disabled = false;
+
+        if (error) {
+            mensaje.textContent =
+                "No se pudo iniciar sesión. Verifica tus datos.";
+            return;
+        }
+
+        mensaje.textContent = "Sesión iniciada correctamente.";
+        document.getElementById("acceso").innerHTML =
+            "<h3>Bienvenido al panel de administración</h3>" +
+            "<p>El acceso funciona. Ahora prepararemos la gestión de productos.</p>" +
+            '<button id="cerrarSesion" type="button">Cerrar sesión</button>';
+
+        document.getElementById("cerrarSesion")
+            .addEventListener("click", async () => {
+                await supabaseClient.auth.signOut();
+                location.reload();
+            });
+    });
+</script>
+</body>
+</html>
