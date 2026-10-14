@@ -25,6 +25,9 @@
             <button id="iniciarSesion" type="button" style="padding:12px 20px;">
                 Iniciar sesión
             </button>
+            <p>
+    <a href="#" id="olvidasteContrasena">¿Olvidaste tu contraseña?</a>
+</p>
             <p id="mensaje" role="status"></p>
         </section>
     </main>
@@ -94,6 +97,30 @@ supabaseClient.auth.onAuthStateChange((event, session) => {
     const boton = document.getElementById("iniciarSesion");
     
     const mensaje = document.getElementById("mensaje");
+
+document.getElementById("olvidasteContrasena").addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const correo = document.getElementById("correo").value.trim();
+
+    if (!correo) {
+        mensaje.textContent = "Escribe tu correo electrónico primero.";
+        return;
+    }
+
+    mensaje.textContent = "Solicitando recuperación...";
+
+    const { error } = await supabaseClient.auth.resetPasswordForEmail(correo, {
+        redirectTo: "https://abanto-fragancias.netlify.app/admin.html"
+    });
+
+    if (error) {
+        mensaje.textContent = "No se pudo enviar el correo: " + error.message;
+        return;
+    }
+
+    mensaje.textContent = "Solicitud enviada. Revisa tu correo y la carpeta de spam.";
+});
 
     boton.addEventListener("click", async () => {
         const correo = document.getElementById("correo").value.trim();
