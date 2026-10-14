@@ -10,7 +10,7 @@ const perfumes = {
         ],
         precios: {
             "3 ml": 20,
-            "5 ml": 35,
+            "5 ml": 30,
             "10 ml": 45
         },
         agotados: ["3 ml", "5 ml", "10 ml"],
