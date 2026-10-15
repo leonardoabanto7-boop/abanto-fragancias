@@ -1,494 +1,887 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Perfumes Árabes | Abanto Fragancias</title>
+
     <link rel="icon" type="image/png" href="img/logo.png">
+
     <link rel="stylesheet" href="css/estilos.css">
+
 </head>
+
 <body>
-    
+
 <header class="cabecera">
+
     <button
+
         class="boton-menu-movil"
+
         id="botonMenuMovil"
+
         type="button"
+
         aria-label="Abrir menú"
+
         aria-expanded="false"
+
         aria-controls="menuPrincipal"
+
     >
+
         <span></span>
+
         <span></span>
+
         <span></span>
+
     </button>
 
     <a href="index.html" class="marca">
+
             <img src="img/logo.png" alt="Abanto Fragancias">
+
             <span>ABANTO FRAGANCIAS</span>
+
         </a>
 
         <nav class="menu" id="menuPrincipal">
+
             <a href="index.html">INICIO</a>
 
             <div class="menu-catalogo">
+
                 <a href="#" onclick="return false;">CATÁLOGO <span>⌄</span></a>
+
                 <div class="submenu">
+
                     <a href="perfumes-arabes.html">Árabes</a>
+
                     <a href="perfumes-disenador.html">Diseñador</a>
+
                     <a href="producto.html?producto=xerjoff-erba-pura">Nicho</a>
+
                 </div>
+
             </div>
 
             <a href="contactos.html">CONTACTOS</a>
+
             <a href="nosotros.html">NOSOTROS</a>
+
         </nav>
 
-        
 <div class="buscador-web">
+
     <button
+
         class="boton-buscar"
+
         id="abrir-buscador"
+
         type="button"
+
         aria-label="Buscar perfumes"
+
     >
+
         <span></span>
+
     </button>
 
     <div class="panel-buscador" id="panel-buscador" hidden>
+
         <input
+
             type="search"
+
             id="campo-busqueda"
+
             placeholder="¿Qué perfume estás buscando?"
+
             autocomplete="off"
+
         >
+
         <div id="resultados-busqueda"></div>
+
     </div>
+
 </div>
 
     </header>
 
     <main>
+
         <section class="titulo-catalogo">
+
             <h2>PERFUMES ÁRABES</h2>
+
         </section>
 
         <section class="catalogo-arabes-pagina">
 
  <button type="button" class="boton-abrir-filtros" id="botonAbrirFiltros">
+
     <span class="icono-filtro">☷</span>
+
     Filtrar
+
 </button>
 
 <aside class="filtros-arabes">
 
     <details class="filtro-grupo">
+
         <summary>Sexo</summary>
+
         <label><input type="checkbox" name="sexo" value="hombre"> Hombre</label>
+
         <label><input type="checkbox" name="sexo" value="mujer"> Mujer</label>
+
     </details>
 
     <details class="filtro-grupo">
+
         <summary>Precio</summary>
+
         <label><input type="checkbox" name="precio" value="0-19"> S/ 0–19</label>
+
         <label><input type="checkbox" name="precio" value="20-30"> S/ 20–30</label>
+
         <label><input type="checkbox" name="precio" value="31-mas"> Más de S/ 31</label>
+
     </details>
 
     <details class="filtro-grupo">
+
         <summary>Marca</summary>
+
         <label><input type="checkbox" name="marca" value="lattafa"> Lattafa</label>
+
         <label><input type="checkbox" name="marca" value="rasasi"> Rasasi</label>
+
         <label><input type="checkbox" name="marca" value="afnan"> Afnan</label>
+
         <label><input type="checkbox" name="marca" value="bharara"> Bharara</label>
+
         <label><input type="checkbox" name="marca" value="french-avenue"> French Avenue</label>
+
         <label><input type="checkbox" name="marca" value="dumont"> Dumont</label>
+
     </details>
 
     <details class="filtro-grupo">
+
         <summary>Estación</summary>
+
         <label><input type="checkbox" name="estacion" value="verano"> Verano</label>
+
         <label><input type="checkbox" name="estacion" value="invierno"> Invierno</label>
+
     </details>
 
     <details class="filtro-grupo">
+
     <summary>Aroma</summary>
+
     <label><input type="checkbox" name="aroma" value="citrico"> Cítrico</label>
+
     <label><input type="checkbox" name="aroma" value="dulce"> Dulce</label>
+
     <label><input type="checkbox" name="aroma" value="fresco"> Fresco</label>
+
     <label><input type="checkbox" name="aroma" value="amaderado"> Amaderado</label> 
+
     </details>
 
     <button type="button" id="limpiar-filtros">Limpiar filtros</button>
 
 </aside>
 
-    
-
 <div class="resultados-arabes">
 
     <a class="producto-arabe"
+
        href="producto.html?producto=bharara-king"
+
        data-sexo="hombre"
+
        data-precio="20"
+
        data-marca="bharara"
+
        data-estacion="invierno"
+
        data-aroma="dulce amaderado">
+
         <div class="producto-imagen">
+
             <img src="img/productos/1. Bahara king.png" alt="Bharara King">
+
         </div>
+
         <h3>Bharara King</h3>
+
         <p>Desde S/ 20</p>
+
     </a>
 
     <a class="producto-arabe"
+
        href="producto.html?producto=hawas-ice"
+
        data-sexo="hombre"
+
        data-precio="17"
+
        data-marca="rasasi"
+
        data-estacion="verano"
+
        data-aroma="fresco citrico">
+
         <div class="producto-imagen">
+
             <img src="img/productos/2. Hawas Ice.png" alt="Hawas Ice">
+
         </div>
+
         <h3>Hawas Ice</h3>
+
         <p>Desde S/ 17</p>
+
     </a>
 
     <a class="producto-arabe"
+
        href="producto.html?producto=khamrah-clasico"
+
        data-sexo="hombre mujer"
+
        data-precio="15"
+
        data-marca="lattafa"
+
        data-estacion="invierno"
+
        data-aroma="dulce amaderado">
+
         <div class="producto-imagen">
+
             <img src="img/productos/3. Khamrah Clasico.png" alt="Khamrah Clásico">
+
         </div>
+
         <h3>Khamrah Clásico</h3>
+
         <p>Desde S/ 15</p>
+
     </a>
 
     <a class="producto-arabe"
+
        href="producto.html?producto=asad-bourbon"
+
        data-sexo="hombre"
+
        data-precio="17"
+
        data-marca="lattafa"
+
        data-estacion="invierno"
+
        data-aroma="dulce amaderado">
+
         <div class="producto-imagen">
+
             <img src="img/productos/4. Asad bourbon.png" alt="Asad Bourbon">
+
         </div>
+
         <h3>Asad Bourbon</h3>
+
         <p>Desde S/ 17</p>
+
     </a>
 
     <a class="producto-arabe"
+
        href="producto.html?producto=9-pm"
+
        data-sexo="hombre"
+
        data-precio="17"
+
        data-marca="afnan"
+
        data-estacion="invierno"
+
        data-aroma="dulce">
+
         <div class="producto-imagen">
+
             <img src="img/productos/5. 9 pm.png" alt="9 PM">
+
         </div>
+
         <h3>9 PM</h3>
+
         <p>Desde S/ 17</p>
+
     </a>
 
     <a class="producto-arabe"
+
        href="producto.html?producto=badee-al-oud-sublime"
+
        data-sexo="hombre mujer"
+
        data-precio="15"
+
        data-marca="lattafa"
+
        data-estacion="verano invierno"
+
        data-aroma="dulce fresco">
+
         <div class="producto-imagen">
+
             <img src="img/productos/6. Badée Al Oud Sublime.png" alt="Bade'e Al Oud Sublime">
+
         </div>
+
         <h3>Bade'e Al Oud Sublime</h3>
+
         <p>Desde S/ 15</p>
+
     </a>
 
     <a class="producto-arabe"
+
        href="producto.html?producto=yara-pink"
+
        data-sexo="mujer"
+
        data-precio="15"
+
        data-marca="lattafa"
+
        data-estacion="verano invierno"
+
        data-aroma="dulce">
+
         <div class="producto-imagen">
+
             <img src="img/productos/7. Yara Pink.png" alt="Yara Pink">
+
         </div>
+
         <h3>Yara Pink</h3>
+
         <p>Desde S/ 15</p>
+
     </a>
 
     <a class="producto-arabe"
+
        href="producto.html?producto=9-am-dive"
+
        data-sexo="hombre"
+
        data-precio="15"
+
        data-marca="afnan"
+
        data-estacion="verano"
+
        data-aroma="fresco citrico">
+
         <div class="producto-imagen">
+
             <img src="img/productos/12. 9 am Dive.png" alt="9 am Dive">
+
         </div>
+
         <h3>9 am Dive</h3>
+
         <p>Desde S/ 15</p>
+
     </a>
 
 <a class="producto-arabe producto-agotado"
+
        href="producto.html?producto=9-pm-elixir"
+
        data-agotado="true"
+
        data-sexo="hombre mujer"
+
        data-precio="15"
+
        data-marca="afnan"
+
        data-estacion="invierno"
+
        data-aroma="dulce amaderado">
+
         <div class="producto-imagen">
+
             <img src="img/productos/13. 9 pm elixir.png" alt="9 pm Elixir">
+
             <span class="etiqueta-agotado">AGOTADO</span>
+
         </div>
+
         <h3>9 pm Elixir</h3>
+
         <p>Desde S/ 15</p>
+
     </a>
 
 <a class="producto-arabe"
+
    href="producto.html?producto=khamrah-qahwa"
+
    data-sexo="hombre"
+
    data-precio="15"
+
    data-marca="lattafa"
+
    data-estacion="invierno"
+
    data-aroma="dulce amaderado">
+
     <div class="producto-imagen">
+
         <img src="img/productos/19. Khamrah Qahwa.png" alt="Khamrah Qahwa">
+
     </div>
+
     <h3>Khamrah Qahwa</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe"
+
    href="producto.html?producto=veneno-bianco"
+
    data-sexo="hombre"
+
    data-precio="15"
+
    data-marca="french-avenue"
+
    data-estacion="verano"
+
    data-aroma="dulce amaderado">
+
     <div class="producto-imagen">
+
         <img src="img/productos/17. Veneno Bianco.png" alt="Veneno Bianco">
+
     </div>
+
     <h3>Veneno Bianco</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe producto-agotado"
+
    href="producto.html?producto=nitro-red-intensely"
+
    data-agotado="true"
+
    data-sexo="hombre"
+
    data-precio="15"
+
    data-marca="dumont"
+
    data-estacion="invierno"
+
    data-aroma="dulce amaderado">
+
     <div class="producto-imagen">
+
         <img src="img/productos/20. Nitro Red Intensely.png" alt="Nitro Red Intensely">
+
         <span class="etiqueta-agotado">AGOTADO</span>
+
     </div>
+
     <h3>Nitro Red Intensely</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe producto-agotado"
+
    href="producto.html?producto=9-pm-night-out"
+
    data-agotado="true"
+
    data-sexo="hombre"
+
    data-precio="15"
+
    data-marca="afnan"
+
    data-estacion="invierno"
+
    data-aroma="dulce amaderado">
+
     <div class="producto-imagen">
+
         <img src="img/productos/14. 9 pm night Out.png" alt="9 PM Night Out">
+
         <span class="etiqueta-agotado">AGOTADO</span>
+
     </div>
+
     <h3>9 PM Night Out</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe"
+
    href="producto.html?producto=khamrah-dukan"
+
    data-sexo="hombre"
+
    data-precio="15"
+
    data-marca="lattafa"
+
    data-estacion="invierno"
+
    data-aroma="dulce amaderado">
+
     <div class="producto-imagen">
+
         <img src="img/productos/26. khamrah Dukhan.png" alt="Khamrah Dukan">
+
     </div>
+
     <h3>Khamrah Dukan</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe producto-agotado"
+
    href="producto.html?producto=hawas-la-mer"
+
    data-agotado="true"
+
    data-sexo="hombre"
+
    data-precio="15"
+
    data-marca="rasasi"
+
    data-estacion="verano"
+
    data-aroma="fresco citrico">
+
     <div class="producto-imagen">
+
         <img src="img/productos/18. Hawas La Mer.png" alt="Hawas La Mer">
+
         <span class="etiqueta-agotado">AGOTADO</span>
+
     </div>
+
     <h3>Hawas La Mer</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe"
+
    href="producto.html?producto=yara-tous"
+
    data-sexo="mujer"
+
    data-precio="15"
+
    data-marca="lattafa"
+
    data-estacion="verano"
+
    data-aroma="dulce frutal">
+
     <div class="producto-imagen">
+
         <img src="img/productos/24. Yara Tous.png" alt="Yara Tous">
+
     </div>
+
     <h3>Yara Tous</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe"
+
    href="producto.html?producto=yum-yum"
+
    data-sexo="mujer"
+
    data-precio="15"
+
    data-marca="armaf"
+
    data-estacion="verano"
+
    data-aroma="dulce frutal">
+
     <div class="producto-imagen">
+
         <img src="img/productos/25. Yum Yum.png" alt="Yum Yum">
+
     </div>
+
     <h3>Yum Yum</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe producto-agotado"
+
    href="producto.html?producto=honor-glory"
+
    data-agotado="true"
+
    data-sexo="hombre mujer"
+
    data-precio="15"
+
    data-marca="lattafa"
+
    data-estacion="verano invierno"
+
    data-aroma="dulce amaderado">
+
     <div class="producto-imagen">
+
         <img src="img/productos/16. Honor & Glory.png" alt="Honor & Glory">
+
         <span class="etiqueta-agotado">AGOTADO</span>
+
     </div>
+
     <h3>Honor & Glory</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe"
+
    href="producto.html?producto=club-de-nuit-intense-man"
+
    data-sexo="hombre"
+
    data-precio="15"
+
    data-marca="armaf"
+
    data-estacion="verano invierno"
+
    data-aroma="citrico amaderado">
+
     <div class="producto-imagen">
+
         <img src="img/productos/15. Club de Nuit Intense Man.png" alt="Club de Nuit Intense Man">
+
     </div>
+
     <h3>Club de Nuit Intense Man</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe"
+
    href="producto.html?producto=odyssey-aqua"
+
    data-sexo="hombre"
+
    data-precio="15"
+
    data-marca="armaf"
+
    data-estacion="verano"
+
    data-aroma="fresco citrico">
+
     <div class="producto-imagen">
+
         <img src="img/productos/21. Odyssey Aqua.png" alt="Odyssey Aqua">
+
     </div>
+
     <h3>Odyssey Aqua</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe"
+
    href="producto.html?producto=opulent-dubai"
+
    data-sexo="hombre mujer"
+
    data-precio="15"
+
    data-marca="lattafa"
+
    data-estacion="verano invierno"
+
    data-aroma="dulce amaderado">
+
     <div class="producto-imagen">
+
         <img src="img/productos/22. Opulent Dubai.png" alt="Opulent Dubai">
+
     </div>
+
     <h3>Opulent Dubai</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe"
+
    href="producto.html?producto=mandarin-sky"
+
    data-sexo="hombre"
+
    data-precio="15"
+
    data-marca="armaf"
+
    data-estacion="verano"
+
    data-aroma="dulce citrico">
+
     <div class="producto-imagen">
+
         <img src="img/productos/27. Mandrin Sky.png" alt="Mandarin Sky">
+
     </div>
+
     <h3>Mandarin Sky</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe"
+
    href="producto.html?producto=yara-elixir"
+
    data-sexo="mujer"
+
    data-precio="15"
+
    data-marca="lattafa"
+
    data-estacion="verano invierno"
+
    data-aroma="dulce frutal">
+
     <div class="producto-imagen">
+
         <img src="img/productos/29. Yara Elixir.png" alt="Yara Elixir">
+
     </div>
+
     <h3>Yara Elixir</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe"
+
    href="producto.html?producto=vulcan-feu"
+
    data-sexo="hombre mujer"
+
    data-precio="15"
+
    data-marca="french-avenue"
+
    data-estacion="verano"
+
    data-aroma="dulce frutal">
+
     <div class="producto-imagen">
+
         <img src="img/productos/23. Vulcan Feu.png" alt="Vulcan Feu">
+
     </div>
+
     <h3>Vulcan Feu</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
 
 <a class="producto-arabe"
+
    href="producto.html?producto=mandarin-sky-elixir"
+
    data-sexo="hombre"
+
    data-precio="15"
+
    data-marca="armaf"
+
    data-estacion="verano"
+
    data-aroma="dulce citrico">
+
     <div class="producto-imagen">
+
         <img src="img/productos/28. Mandarin Sky Elixir.png" alt="Mandarin Sky Elixir">
+
     </div>
+
     <h3>Mandarin Sky Elixir</h3>
+
     <p>Desde S/ 15</p>
+
 </a>
-    
+
     <p id="sin-resultados-arabes" hidden>
+
         No se encontraron perfumes con los filtros seleccionados.
+
     </p>
 
 </div>
@@ -496,207 +889,395 @@
 </section>
 
 <script>
+
 document.addEventListener("DOMContentLoaded", () => {
     const filtros = document.querySelector(".filtros-arabes");
-const botonAbrirFiltros = document.getElementById("botonAbrirFiltros");
+    const contenedor = document.querySelector(".resultados-arabes");
+    if (!filtros || !contenedor) return;
 
-if (botonAbrirFiltros && filtros) {
-    botonAbrirFiltros.addEventListener("click", () => {
-        const abiertos = filtros.classList.toggle("filtros-movil-abiertos");
-
-        botonAbrirFiltros.setAttribute("aria-expanded", String(abiertos));
-        botonAbrirFiltros.innerHTML = abiertos
-            ? '<span class="icono-filtro">✕</span> Cerrar filtros'
-            : '<span class="icono-filtro">☷</span> Filtrar';
-    });
-}
-    const productos = [
-        ...document.querySelectorAll(".resultados-arabes .producto-arabe")
-    ];
-    
     const mensajeVacio = document.getElementById("sin-resultados-arabes");
     const botonLimpiar = document.getElementById("limpiar-filtros");
+    const botonAbrirFiltros = document.getElementById("botonAbrirFiltros");
 
-productos.forEach(producto => {
-    if (producto.dataset.agotado === "true") {
-        producto.addEventListener("click", event => {
-            event.preventDefault();
+    if (botonAbrirFiltros) {
+        botonAbrirFiltros.addEventListener("click", () => {
+            const abiertos = filtros.classList.toggle("filtros-movil-abiertos");
+            botonAbrirFiltros.setAttribute("aria-expanded", String(abiertos));
+            botonAbrirFiltros.innerHTML = abiertos
+                ? '<span class="icono-filtro">✕</span> Cerrar filtros'
+                : '<span class="icono-filtro">☷</span> Filtrar';
         });
-
-        producto.setAttribute("aria-disabled", "true");
-        producto.style.cursor = "not-allowed";
     }
-});
+
+    const normalizar = texto => (texto || "")
+        .toString()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+
+    const slug = texto => normalizar(texto)
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+
+    const tokens = texto => normalizar(texto)
+        .split(/[,;/|]+|\s+/)
+        .map(x => x.trim())
+        .filter(Boolean);
+
+    const nombreClave = texto => normalizar(texto).replace(/[^a-z0-9]+/g, "");
+    let filasDB = [];
+    let productos = [...contenedor.querySelectorAll(".producto-arabe")];
+
+    function valorPrecio(p) {
+        const candidatos = [p.precio_3ml, p.precio_5ml, p.precio_10ml, p.precio_frasco]
+            .map(Number).filter(n => Number.isFinite(n) && n > 0);
+        return candidatos.length ? Math.min(...candidatos) : 0;
+    }
+
+    function actualizarTarjeta(card, p) {
+        card.dataset.sexo = tokens(p.sexo).map(slug).join(" ");
+        card.dataset.precio = String(valorPrecio(p));
+        card.dataset.marca = slug(p.marca);
+        card.dataset.estacion = tokens(p.estacion).map(slug).join(" ");
+        card.dataset.aroma = tokens(p.aroma).map(slug).join(" ");
+
+        const titulo = card.querySelector("h3");
+        if (titulo && p.nombre) titulo.textContent = p.nombre;
+
+        const precioEl = card.querySelector("p");
+        if (precioEl && valorPrecio(p) > 0) precioEl.textContent = `Desde S/ ${valorPrecio(p)}`;
+
+        const img = card.querySelector(".producto-imagen img");
+        if (img && p.imagen_url) {
+            img.src = p.imagen_url;
+            img.alt = p.nombre || "";
+        } else if (!img && p.imagen_url) {
+            const box = card.querySelector(".producto-imagen");
+            if (box) {
+                const nueva = document.createElement("img");
+                nueva.src = p.imagen_url;
+                nueva.alt = p.nombre || "";
+                nueva.loading = "lazy";
+                box.appendChild(nueva);
+            }
+        }
+    }
+
+    function crearTarjeta(p) {
+        const card = document.createElement("a");
+        card.className = "producto-arabe";
+        card.href = `producto.html?producto=${encodeURIComponent(slug(p.nombre))}`;
+        card.dataset.sexo = tokens(p.sexo).map(slug).join(" ");
+        card.dataset.precio = String(valorPrecio(p));
+        card.dataset.marca = slug(p.marca);
+        card.dataset.estacion = tokens(p.estacion).map(slug).join(" ");
+        card.dataset.aroma = tokens(p.aroma).map(slug).join(" ");
+
+        const box = document.createElement("div");
+        box.className = "producto-imagen";
+        if (p.imagen_url) {
+            const img = document.createElement("img");
+            img.src = p.imagen_url;
+            img.alt = p.nombre || "";
+            img.loading = "lazy";
+            box.appendChild(img);
+        }
+        const h3 = document.createElement("h3");
+        h3.textContent = p.nombre || "Perfume";
+        const price = document.createElement("p");
+        price.textContent = valorPrecio(p) > 0 ? `Desde S/ ${valorPrecio(p)}` : "Consultar precio";
+        card.append(box, h3, price);
+        return card;
+    }
+
+    function actualizarOpcionesMarca() {
+        const grupo = [...filtros.querySelectorAll(".filtro-grupo")].find(g =>
+            normalizar(g.querySelector("summary")?.textContent) === "marca"
+        );
+        if (!grupo || !filasDB.length) return;
+        const marcasPrevias = [...grupo.querySelectorAll('input[name="marca"]:checked')].map(x => x.value);
+        const marcas = [...new Map(
+            filasDB.map(p => [slug(p.marca), (p.marca || "").trim()])
+                .filter(([key, label]) => key && label)
+        ).entries()].sort((a,b) => a[1].localeCompare(b[1], "es"));
+
+        grupo.querySelectorAll('label').forEach(label => label.remove());
+        marcas.forEach(([key, label]) => {
+            const lab = document.createElement("label");
+            const input = document.createElement("input");
+            input.type = "checkbox";
+            input.name = "marca";
+            input.value = key;
+            input.checked = marcasPrevias.includes(key);
+            lab.append(input, document.createTextNode(" " + label));
+            grupo.appendChild(lab);
+        });
+    }
 
     function aplicarFiltros() {
-        const seleccionados = nombre => [
-            ...filtros.querySelectorAll(
-                `input[name="${nombre}"]:checked`
-            )
-        ].map(input => input.value);
+        const seleccionados = nombre => [...filtros.querySelectorAll(`input[name="${nombre}"]:checked`)]
+            .map(input => input.value);
 
         const sexos = seleccionados("sexo");
         const precios = seleccionados("precio");
         const marcas = seleccionados("marca");
         const estaciones = seleccionados("estacion");
         const aromas = seleccionados("aroma");
-
         let cantidadVisible = 0;
 
-        productos.forEach(producto => {
-            const sexoProducto = (producto.dataset.sexo || "").split(" ");
-            const precioProducto = Number(producto.dataset.precio);
-            const marcaProducto = producto.dataset.marca;
-            const estacionesProducto = (producto.dataset.estacion || "").split(" ");
-            const aromasProducto = (producto.dataset.aroma || "").split(" ");
+        productos.forEach(card => {
+            const sexo = tokens(card.dataset.sexo).map(slug);
+            const precio = Number(card.dataset.precio) || 0;
+            const marca = slug(card.dataset.marca);
+            const estacionesCard = tokens(card.dataset.estacion).map(slug);
+            const aromasCard = tokens(card.dataset.aroma).map(slug);
 
-            const coincideSexo =
-                sexos.length === 0 ||
-                sexos.some(sexo => sexoProducto.includes(sexo));
-
-            const coincidePrecio =
-                precios.length === 0 ||
-                precios.some(rango => {
-                    if (rango === "0-19") return precioProducto >= 0 && precioProducto <= 19;
-                    if (rango === "20-30") return precioProducto >= 20 && precioProducto <= 30;
-                    if (rango === "31-mas") return precioProducto > 31;
-                    return false;
-                });
-
-            const coincideMarca =
-                marcas.length === 0 || marcas.includes(marcaProducto);
-
-            const coincideEstacion =
-                estaciones.length === 0 ||
-                estaciones.some(estacion => estacionesProducto.includes(estacion));
-
-            const coincideAroma =
-                aromas.length === 0 ||
-                aromas.some(aroma => aromasProducto.includes(aroma));
-
-            const mostrar =
-                coincideSexo &&
-                coincidePrecio &&
-                coincideMarca &&
-                coincideEstacion &&
-                coincideAroma; 
-
-            producto.hidden = !mostrar;
-
+            const coincideSexo = !sexos.length || sexos.some(x => sexo.includes(slug(x)));
+            const coincidePrecio = !precios.length || precios.some(rango => {
+                if (rango === "0-19" || rango === "0-20") return precio >= 0 && precio <= (rango === "0-19" ? 19 : 20);
+                if (rango === "20-30") return precio >= 20 && precio <= 30;
+                if (rango === "21-40") return precio >= 21 && precio <= 40;
+                if (rango === "31-mas") return precio >= 31;
+                if (rango === "41-mas") return precio >= 41;
+                return false;
+            });
+            const coincideMarca = !marcas.length || marcas.includes(marca);
+            const coincideEstacion = !estaciones.length || estaciones.some(x => estacionesCard.includes(slug(x)));
+            const coincideAroma = !aromas.length || aromas.some(x => aromasCard.includes(slug(x)));
+            const mostrar = coincideSexo && coincidePrecio && coincideMarca && coincideEstacion && coincideAroma;
+            card.hidden = !mostrar;
             if (mostrar) cantidadVisible++;
         });
 
-        mensajeVacio.hidden = cantidadVisible !== 0;
+        if (mensajeVacio) mensajeVacio.hidden = cantidadVisible !== 0;
     }
 
-    filtros.addEventListener("change", aplicarFiltros);
+    async function cargarDatos() {
+        try {
+            const url = "https://vvntaanbzaqlkretstrg.supabase.co/rest/v1/productos?select=*&disponible=eq.true";
+            const respuesta = await fetch(url, {
+                headers: { apikey: "sb_publishable_yLVoioG4a-nA_KkJ1wQzTQ_kr_9WYnH" },
+                cache: "no-store"
+            });
+            if (!respuesta.ok) throw new Error(`Supabase respondió ${respuesta.status}`);
+            const todos = await respuesta.json();
+            const categoriaActual = "arabe";
+            filasDB = todos.filter(p => normalizar(p.categoria).includes(categoriaActual));
+            actualizarOpcionesMarca();
 
-    botonLimpiar.addEventListener("click", () => {
-        filtros.querySelectorAll('input[type="checkbox"]').forEach(input => {
-            input.checked = false;
+            filasDB.forEach(p => {
+                const existente = productos.find(card =>
+                    nombreClave(card.querySelector("h3")?.textContent) === nombreClave(p.nombre)
+                );
+                if (existente) {
+                    actualizarTarjeta(existente, p);
+                } else {
+                    const nueva = crearTarjeta(p);
+                    contenedor.insertBefore(nueva, mensajeVacio || null);
+                }
+            });
+
+            productos = [...contenedor.querySelectorAll(".producto-arabe")];
+            // Los perfumes guardados en Supabase mandan sobre los atributos escritos a mano.
+            productos.forEach(card => {
+                const p = filasDB.find(row =>
+                    nombreClave(row.nombre) === nombreClave(card.querySelector("h3")?.textContent)
+                );
+                if (p) actualizarTarjeta(card, p);
+            });
+        } catch (error) {
+            console.error("No se pudieron cargar los perfumes y filtros:", error);
+        } finally {
+            aplicarFiltros();
+        }
+    }
+
+    if (botonLimpiar) {
+        botonLimpiar.addEventListener("click", () => {
+            filtros.querySelectorAll('input[type="checkbox"]').forEach(input => input.checked = false);
+            aplicarFiltros();
         });
-
-        aplicarFiltros();
-    });
-
+    }
+    filtros.addEventListener("change", aplicarFiltros);
     aplicarFiltros();
+    cargarDatos();
 });
+
 </script>
+
 <script src="js/buscador.js"></script>
+
 <script src="js/menu-movil.js"></script>
 
 <!-- PIE DE PÁGINA -->
+
 <footer class="pie-pagina">
+
     <div class="contenido-pie">
 
         <div class="columna-pie">
+
             <h3>SOMOS TU MEJOR OPCIÓN</h3>
+
             <p>
+
                 En Abanto Fragancias garantizamos productos
+
                 100% originales y nos comprometemos a ofrecerte
+
                 una experiencia de compra confiable.
+
             </p>
+
             <a href="nosotros.html" class="enlace-nosotros">
+
                 Más información →
+
             </a>
+
         </div>
 
         <div class="columna-pie">
+
             <h3>Acceso rápido</h3>
+
             <a href="index.html">Inicio</a>
+
             <a href="perfumes-arabes.html">Perfumes árabes</a>
+
             <a href="perfumes-disenador.html">Perfumes de diseñador</a>
+
             <a href="perfumes-nicho.html">Perfumes de nicho</a>
+
         </div>
 
         <div class="columna-pie">
+
             <h3>Número telefónico</h3>
+
             <a href="https://wa.me/51973740935"
-               target="_blank"
+
+               target="\_blank"
+
                rel="noopener noreferrer"
+
                class="telefono-pie">
+
                 +51 973 740 935
+
             </a>
+
         </div>
 
         <div class="columna-pie">
+
             <h3>Correo electrónico</h3>
-            <a href="mailto:fragancias.abanto@gmail.com"
+
+            <a href="mailto:fragancias.abanto\@gmail.com"
+
                class="correo-pie">
-                fragancias.abanto@gmail.com
+
+                fragancias.abanto\@gmail.com
+
             </a>
 
             <h3 class="titulo-redes">Nuestras redes</h3>
+
             <div class="redes-sociales">
-                <a href="https://www.instagram.com/abanto.fragancias/"
-                   target="_blank"
+
+                <a href="https://www\.instagram.com/abanto.fragancias/"
+
+                   target="\_blank"
+
                    rel="noopener noreferrer"
+
                    aria-label="Instagram de Abanto Fragancias"
+
                    class="icono-red">
+
                     <svg viewBox="0 0 24 24" aria-hidden="true">
+
                         <rect x="3" y="3" width="18" height="18" rx="5"
+
                               fill="none" stroke="currentColor" stroke-width="2"/>
+
                         <circle cx="12" cy="12" r="4"
+
                                 fill="none" stroke="currentColor" stroke-width="2"/>
+
                         <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+
                     </svg>
+
                 </a>
 
-                <a href="https://www.tiktok.com/"
-                   target="_blank"
+                <a href="https://www\.tiktok.com/"
+
+                   target="\_blank"
+
                    rel="noopener noreferrer"
+
                    aria-label="TikTok de Abanto Fragancias"
+
                    class="icono-red">
+
                     <svg viewBox="0 0 24 24" aria-hidden="true">
+
                         <path d="M15 3v11a4.5 4.5 0 1 1-4-4.47v3.1a1.5 1.5 0 1 0 1 1.42V3h3c.3 2.1 1.6 3.6 4 4v3.1A8 8 0 0 1 15 8"
+
                               fill="currentColor"/>
+
                     </svg>
+
                 </a>
+
             </div>
+
         </div>
 
     </div>
 
     <div class="derechos-pie">
+
         © 2026 Abanto Fragancias. Todos los derechos reservados.
+
     </div>
+
 </footer>
 
 <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+
 <a
+
     href="https://wa.me/51973740935"
+
     class="whatsapp-flotante"
-    target="_blank"
+
+    target="\_blank"
+
     rel="noopener noreferrer"
+
     aria-label="Contáctanos por WhatsApp"
+
 >
+
     <svg viewBox="0 0 24 24" aria-hidden="true">
+
         <path
+
             fill="currentColor"
+
             d="M20.52 3.48A11.86 11.86 0 0 0 12.08 0C5.5 0 .15 5.35.15 11.93c0 2.1.55 4.15 1.6 5.96L0 24l6.28-1.65a11.9 11.9 0 0 0 5.8 1.48h.01C18.67 23.83 24 18.5 24 11.93a11.86 11.86 0 0 0-3.48-8.45ZM12.09 21.8a9.9 9.9 0 0 1-5.05-1.39l-.36-.21-3.73.98.99-3.64-.24-.37a9.85 9.85 0 0 1-1.52-5.24c0-5.47 4.45-9.92 9.92-9.92a9.86 9.86 0 0 1 7.02 2.91 9.86 9.86 0 0 1 2.9 7.02c0 5.47-4.45 9.92-9.93 9.92Zm5.45-7.43c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.5 1.7.64.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"
+
         />
+
     </svg>
+
 </a>
 
+
+
 </body>
+
 </html>

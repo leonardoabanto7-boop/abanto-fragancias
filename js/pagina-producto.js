@@ -405,121 +405,245 @@ const parametros = new URLSearchParams(window.location.search);
 const productoId = parametros.get("producto");
 const enlaceVolver = document.getElementById("enlace-volver-catalogo");
 
+
 const productosDisenador = [
     "stronger-with-you-intensely",
     "valentino-born-in-roma-intense",
-    "le-beau-le-parfum",
-    "xerjoff-erba-pura"
+    "le-beau-le-parfum"
 ];
 
-if (enlaceVolver && productosDisenador.includes(productoId)) {
-    enlaceVolver.href = "perfumes-disenador.html";
-}
-const perfume = perfumes[productoId];
-
-if (perfume) {
-    document.getElementById("nombre-producto").textContent = perfume.nombre;
-    document.getElementById("marca-producto").textContent = perfume.marca;
-    document.getElementById("descripcion-producto").textContent = perfume.descripcion;
-
-    const foto = document.getElementById("foto-producto");
-    const numeroFoto = document.getElementById("numero-foto");
-    const anterior = document.getElementById("foto-anterior");
-    const siguiente = document.getElementById("foto-siguiente");
-
-    let indiceFoto = 0;
-
-    function mostrarFoto() {
-        foto.src = perfume.imagenes[indiceFoto];
-        foto.alt = perfume.nombre;
-        numeroFoto.textContent = `${indiceFoto + 1} / ${perfume.imagenes.length}`;
-    }
-
-    anterior.addEventListener("click", () => {
-        indiceFoto = (indiceFoto - 1 + perfume.imagenes.length) % perfume.imagenes.length;
-        mostrarFoto();
-    });
-
-    siguiente.addEventListener("click", () => {
-        indiceFoto = (indiceFoto + 1) % perfume.imagenes.length;
-        mostrarFoto();
-    });
-
-    const opciones = document.getElementById("opciones-tamano");
-    const precioPrincipal = document.getElementById("precio-principal");
-    const precioElegido = document.getElementById("precio-elegido");
-    const precioCompleto = document.getElementById("precio-completo");
-    const botonCompleto = document.getElementById("elegir-completo");
-    const volumenCompleto = document.getElementById("volumen-completo");
-    const botonComprar = document.getElementById("comprar-producto");
-
-    let presentacionElegida = null;
-    let precioSeleccionado = null;
-
-Object.entries(perfume.precios).forEach(([tamano, precio]) => {
-    const boton = document.createElement("button");
-    boton.type = "button";
-    boton.className = "opcion-tamano";
-
-    if (perfume.agotados && perfume.agotados.includes(tamano)) {
-        boton.classList.add("agotado");
-        boton.disabled = true;
-        boton.innerHTML = `
-            <small>${tamano}</small>
-            <strong>AGOTADO</strong>
-        `;
+if (enlaceVolver) {
+    if (productoId === "xerjoff-erba-pura") {
+        enlaceVolver.href = "index.html";
+    } else if (productosDisenador.includes(productoId)) {
+        enlaceVolver.href = "perfumes-disenador.html";
     } else {
-        boton.innerHTML = `<small>${tamano}</small><strong>S/${precio}</strong>`;
-
-        boton.addEventListener("click", () => {
-            presentacionElegida = tamano;
-            precioSeleccionado = precio;
-
-            opciones.querySelectorAll("button").forEach(opcion => {
-                opcion.classList.remove("seleccionado");
-            });
-
-            boton.classList.add("seleccionado");
-            precioPrincipal.textContent = `S/${precio}`;
-            precioElegido.textContent = `S/${precio}`;
-            botonComprar.disabled = false;
-        });
+        enlaceVolver.href = "perfumes-arabes.html";
     }
+}
 
-    opciones.appendChild(boton);
-});
+(async () => {
+    const normalizar = texto => (texto || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
 
-    precioCompleto.textContent = `S/${perfume.precioCompleto}`;
-    volumenCompleto.textContent = "100 ml";
+    try {
+        let lista = [];
 
-    botonCompleto.addEventListener("click", () => {
-        presentacionElegida = "Frasco completo de 100 ml";
-        precioSeleccionado = perfume.precioCompleto;
 
-        opciones.querySelectorAll("button").forEach(opcion => {
-            opcion.classList.remove("seleccionado");
-        });
+const respuesta = await fetch(
+    "https://vvntaanbzaqlkretstrg.supabase.co/rest/v1/productos?select=*&disponible=eq.true",
+    {
+        headers: {
+            apikey: "sb_publishable_yLVoioG4a-nA_KkJ1wQzTQ_kr_9WYnH"
+        },
+        cache: "no-store"
+    }
+);
 
-        precioPrincipal.textContent = `S/${precioSeleccionado}`;
-        precioElegido.textContent = `S/${precioSeleccionado}`;
-        botonComprar.disabled = false;
-    });
+if (!respuesta.ok) {
+    throw new Error("No se pudieron cargar los perfumes de Supabase");
+}
 
-    botonComprar.addEventListener("click", () => {
-        if (!presentacionElegida || precioSeleccionado === null) {
+lista = await respuesta.json();
+
+sessionStorage.setItem(
+    "productosSupabase",
+    JSON.stringify(lista)
+);
+
+        const encontrado = lista.find(p =>
+            normalizar(p.nombre) === normalizar(productoId)
+        );
+
+        if (!encontrado) {
+            document.querySelector(".ficha-producto").innerHTML =
+                "<p>No se encontró el perfume en el catálogo.</p>";
             return;
         }
 
-        const mensaje = `Hola, Abanto Fragancias. Deseo comprar ${perfume.nombre}, presentación: ${presentacionElegida}, precio: S/${precioSeleccionado}. ¿Está disponible?`;
+        const perfume = {
+            nombre: encontrado.nombre,
+            marca: encontrado.marca,
+            descripcion: encontrado.descripcion || "",
+            imagenes: encontrado.imagenes?.length
+                ? encontrado.imagenes
+                : encontrado.imagen_url
+                    ? [encontrado.imagen_url]
+                    : [],
+            precios: {
+                "3 ml": encontrado.precio_3ml,
+                "5 ml": encontrado.precio_5ml,
+                "10 ml": encontrado.precio_10ml
+            },
+            precioCompleto: encontrado.precio_frasco,
+            mlFrasco: encontrado.ml_frasco || 100,
+            disponible3ml: encontrado.disponible_3ml,
+            disponible5ml: encontrado.disponible_5ml,
+            disponible10ml: encontrado.disponible_10ml,
+            disponibleFrasco: encontrado.disponible_frasco
+        };
 
-        window.open(
-            `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`,
-            "_blank"
-        );
+        document.getElementById("cargando-producto").style.display = "none";
+document.querySelector(".ficha-producto").style.display = "grid";
+
+        document.getElementById("nombre-producto").textContent = perfume.nombre;
+        document.getElementById("marca-producto").textContent = perfume.marca;
+        document.getElementById("descripcion-producto").textContent = perfume.descripcion;
+
+        const foto = document.getElementById("foto-producto");
+        const numeroFoto = document.getElementById("numero-foto");
+        const anterior = document.getElementById("foto-anterior");
+        const siguiente = document.getElementById("foto-siguiente");
+
+        let indiceFoto = 0;
+
+        function mostrarFoto() {
+            if (!perfume.imagenes.length) {
+                foto.removeAttribute("src");
+                numeroFoto.textContent = "Sin imagen";
+                return;
+            }
+
+            foto.src = perfume.imagenes[indiceFoto];
+            foto.alt = perfume.nombre;
+            numeroFoto.textContent =
+                `${indiceFoto + 1} / ${perfume.imagenes.length}`;
+        }
+
+        anterior.addEventListener("click", () => {
+            if (!perfume.imagenes.length) return;
+            indiceFoto = (indiceFoto - 1 + perfume.imagenes.length)
+                % perfume.imagenes.length;
+            mostrarFoto();
+        });
+
+        siguiente.addEventListener("click", () => {
+            if (!perfume.imagenes.length) return;
+            indiceFoto = (indiceFoto + 1) % perfume.imagenes.length;
+            mostrarFoto();
+        });
+
+        const opciones = document.getElementById("opciones-tamano");
+        const precioPrincipal = document.getElementById("precio-principal");
+        const precioElegido = document.getElementById("precio-elegido");
+        const precioCompleto = document.getElementById("precio-completo");
+        const botonCompleto = document.getElementById("elegir-completo");
+        const volumenCompleto = document.getElementById("volumen-completo");
+        const botonComprar = document.getElementById("comprar-producto");
+
+        let presentacionElegida = null;
+        let precioSeleccionado = null;
+
+        opciones.innerHTML = "";
+        botonComprar.disabled = true;
+
+        Object.entries(perfume.precios).forEach(([tamano, precio]) => {
+            const boton = document.createElement("button");
+            boton.type = "button";
+            boton.className = "opcion-tamano";
+
+            const disponible = tamano === "3 ml"
+                ? perfume.disponible3ml
+                : tamano === "5 ml"
+                    ? perfume.disponible5ml
+                    : perfume.disponible10ml;
+
+            if (disponible === false || precio == null) {
+                boton.classList.add("agotado");
+                boton.disabled = true;
+                boton.innerHTML =
+                    `<small>${tamano}</small><strong>AGOTADO</strong>`;
+            } else {
+                boton.innerHTML =
+                    `<small>${tamano}</small><strong>S/${precio}</strong>`;
+
+                boton.addEventListener("click", () => {
+                    presentacionElegida = tamano;
+                    precioSeleccionado = precio;
+
+                    opciones.querySelectorAll("button").forEach(b =>
+    b.classList.remove("seleccionado")
+);
+
+botonCompleto.classList.remove("seleccionado");
+boton.classList.add("seleccionado");
+                    precioPrincipal.textContent = `S/${precio}`;
+                    precioElegido.textContent = `S/${precio}`;
+                    botonComprar.disabled = false;
+                });
+            }
+
+            opciones.appendChild(boton);
+        });
+
+        precioCompleto.textContent = `S/${perfume.precioCompleto}`;
+        volumenCompleto.textContent = `${perfume.mlFrasco} ml`;
+        botonCompleto.disabled =
+            perfume.disponibleFrasco === false ||
+            perfume.precioCompleto == null;
+
+        if (botonCompleto.disabled) {
+            botonCompleto.textContent = "Frasco completo AGOTADO";
+        }
+
+botonCompleto.addEventListener("click", () => {
+    if (botonCompleto.disabled) return;
+
+    presentacionElegida = `Frasco completo de ${perfume.mlFrasco} ml`;
+    precioSeleccionado = perfume.precioCompleto;
+
+    opciones.querySelectorAll("button").forEach(b =>
+        b.classList.remove("seleccionado")
+    );
+
+    botonCompleto.classList.add("seleccionado");
+
+    precioPrincipal.textContent = `S/${precioSeleccionado}`;
+    precioElegido.textContent = `S/${precioSeleccionado}`;
+    botonComprar.disabled = false;
+});
+
+        botonComprar.addEventListener("click", () => {
+            if (!presentacionElegida || precioSeleccionado === null) return;
+
+            const mensaje =
+                `Hola, Abanto Fragancias. Deseo comprar ${perfume.nombre}, presentación: ${presentacionElegida}, precio: S/${precioSeleccionado}. ¿Está disponible?`;
+
+            window.open(
+                `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`,
+                "_blank"
+            );
+        });
+const todasAgotadas =
+    !perfume.disponible3ml &&
+    !perfume.disponible5ml &&
+    !perfume.disponible10ml &&
+    !perfume.disponibleFrasco;
+
+if (todasAgotadas) {
+    document.getElementById("precio-principal").textContent = "AGOTADO";
+    document.getElementById("precio-elegido").textContent = "AGOTADO";
+
+    opciones.querySelectorAll("button").forEach(boton => {
+        boton.disabled = true;
+        boton.classList.remove("seleccionado");
     });
 
-    mostrarFoto();
-} else {
-    document.querySelector(".ficha-producto").innerHTML =
-        "<p>No se encontró el perfume. Regresa al catálogo y selecciona un producto.</p>";
+    botonCompleto.disabled = true;
+    botonCompleto.classList.remove("seleccionado");
+
+    botonComprar.disabled = true;
+    botonComprar.textContent = "PRODUCTO AGOTADO";
 }
+        mostrarFoto();
+
+    } catch (error) {
+        console.error("Error cargando el perfume:", error);
+        document.querySelector(".ficha-producto").innerHTML =
+            "<p>No se pudo cargar el perfume. Revisa la conexión e inténtalo de nuevo.</p>";
+    }
+})();

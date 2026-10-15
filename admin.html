@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,161 +6,504 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administración | Abanto Fragancias</title>
     <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f6f6f6; color: #171717; }
+        main { max-width: 1100px; margin: 35px auto; padding: 20px; }
+        .panel, .formulario, .producto {
+            background: white; padding: 22px; margin: 18px 0;
+            border: 1px solid #ddd; border-radius: 8px;
+        }
+        .campos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        label { display: block; font-size: 14px; margin-bottom: 6px; }
+        input, select, textarea {
+            width: 100%; box-sizing: border-box; padding: 11px;
+            border: 1px solid #bbb; border-radius: 4px; font: inherit;
+        }
+        textarea { min-height: 80px; resize: vertical; }
+        button { padding: 11px 16px; border: 0; border-radius: 4px; cursor: pointer; margin: 5px 5px 5px 0; }
+        .principal { background: #171717; color: white; }
+        .secundario { background: #e5e5e5; color: #171717; }
+        .peligro { background: #a52626; color: white; }
+        .lista { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+        .producto img { width: 100%; height: 210px; object-fit: contain; background: #fafafa; }
+        .producto h3 { margin-bottom: 8px; }
+        .producto p { overflow-wrap: anywhere; }
+        .estado { padding: 10px 0; white-space: pre-wrap; }
+        .oculto { display: none; }
+        @media (max-width: 600px) {
+            main { padding: 12px; }
+            .campos { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    <main style="max-width: 700px; margin: 60px auto; padding: 24px; font-family: Arial, sans-serif;">
-        <h1>Abanto Fragancias</h1>
-        <h2>Panel de administración</h2>
-        <p>Acceso privado para administradores</p>
+<main>
+    <h1>Abanto Fragancias</h1>
+    <h2>Panel de administración</h2>
+    <p>Gestiona los perfumes de tu catálogo.</p>
 
-        <section id="acceso">
-            <h3>Iniciar sesión</h3>
-            <label for="correo">Correo electrónico</label>
-            <input id="correo" type="email" autocomplete="username" required
-                style="display:block; width:100%; padding:12px; margin:8px 0 16px; box-sizing:border-box;">
+    <section id="acceso" class="panel">
+        <h3>Iniciar sesión</h3>
+        <label for="correo">Correo electrónico</label>
+        <input id="correo" type="email" autocomplete="username">
+        <br><br>
+        <label for="contrasena">Contraseña</label>
+        <input id="contrasena" type="password" autocomplete="current-password">
+        <br><br>
+        <button id="iniciarSesion" class="principal">Iniciar sesión</button>
+        <p id="mensajeAcceso" class="estado" role="status"></p>
+    </section>
 
-            <label for="contrasena">Contraseña</label>
-            <input id="contrasena" type="password" autocomplete="current-password" required
-                style="display:block; width:100%; padding:12px; margin:8px 0 16px; box-sizing:border-box;">
+    <section id="panelAdmin" class="oculto">
+        <div class="panel">
+            <strong>Sesión iniciada</strong>
+            <button id="cerrarSesion" class="secundario">Cerrar sesión</button>
+        </div>
 
-            <button id="iniciarSesion" type="button" style="padding:12px 20px;">
-                Iniciar sesión
-            </button>
-            <p>
-    <a href="#" id="olvidasteContrasena">¿Olvidaste tu contraseña?</a>
-</p>
-            <p id="mensaje" role="status"></p>
+        <section class="formulario">
+            <h2 id="tituloFormulario">Agregar perfume</h2>
+            <form id="formProducto">
+                <input id="productoId" type="hidden">
+
+                <div class="campos">
+                    <div>
+                        <label for="nombre">Nombre del perfume *</label>
+                        <input id="nombre" required>
+                    </div>
+                    <div>
+                        <label for="marca">Marca *</label>
+                        <input id="marca" required>
+                    </div>
+                    <div>
+                        <label for="categoria">Categoría *</label>
+                        <select id="categoria" required>
+                            <option value="Arabe">Árabe</option>
+                            <option value="Diseñador">Diseñador</option>
+                            <option value="Nicho">Nicho</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="sexo">Público</label>
+                        <select id="sexo">
+                            <option value="hombre">Hombre</option>
+                            <option value="mujer">Mujer</option>
+                            <option value="unisex">Unisex</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="precio3">Precio decant 3 ml (S/)</label>
+                        <input id="precio3" type="number" min="0" step="0.01">
+                    </div>
+                    <div>
+                        <label for="precio5">Precio decant 5 ml (S/)</label>
+                        <input id="precio5" type="number" min="0" step="0.01">
+                    </div>
+                    <div>
+                        <label for="precio10">Precio decant 10 ml (S/)</label>
+                        <input id="precio10" type="number" min="0" step="0.01">
+                    </div>
+                    <div>
+                        <label for="precioFrasco">Precio frasco completo (S/)</label>
+                        <input id="precioFrasco" type="number" min="0" step="0.01">
+                    </div>
+                    <div>
+                        <label for="mlFrasco">Contenido del frasco (ml)</label>
+                        <input id="mlFrasco" type="number" min="0" step="1">
+                    </div>
+                    <div>
+                        <label for="aroma">Familia o tipo de aroma</label>
+                        <input id="aroma" placeholder="Dulce, amaderado, cítrico...">
+                    </div>
+                    <div>
+                        <label for="estacion">Estación recomendada</label>
+                        <input id="estacion" placeholder="Verano, invierno...">
+                    </div>
+                    <div>
+                        <label for="imagen">Imagen del perfume</label>
+                        <input id="imagen" type="file" accept="image/*">
+                    </div>
+                </div>
+
+                <br>
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion"></textarea>
+
+                <br>
+                
+<label>
+    <input id="disponible" type="checkbox" checked style="width:auto">
+    Perfume disponible en el catálogo
+</label>
+
+<hr>
+<h3>Disponibilidad por presentación</h3>
+
+<label>
+    <input id="disponible3ml" type="checkbox" checked style="width:auto">
+    Decant de 3 ml disponible
+</label>
+
+<label>
+    <input id="disponible5ml" type="checkbox" checked style="width:auto">
+    Decant de 5 ml disponible
+</label>
+
+<label>
+    <input id="disponible10ml" type="checkbox" checked style="width:auto">
+    Decant de 10 ml disponible
+</label>
+
+<label>
+    <input id="disponibleFrasco" type="checkbox" checked style="width:auto">
+    Frasco completo disponible
+</label>
+
+                <br><br>
+                <button id="guardarProducto" class="principal" type="submit">Guardar perfume</button>
+                <button id="cancelarEdicion" class="secundario oculto" type="button">Cancelar edición</button>
+                <p id="mensajeProducto" class="estado" role="status"></p>
+            </form>
         </section>
-    </main>
+
+        <section class="panel">
+            <h2>Mis perfumes</h2>
+            <button id="actualizarLista" class="secundario">Actualizar lista</button>
+            <p id="mensajeLista" class="estado" role="status"></p>
+            <div id="listaProductos" class="lista"></div>
+        </section>
+    </section>
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-    const SUPABASE_URL = "https://vvntaanbzaqlkretstrg.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_yLVoioG4a-nA_KkJ1wQzTQ_kr_9WYnH";
+const SUPABASE_URL = "https://vvntaanbzaqlkretstrg.supabase.co";
+const SUPABASE_KEY = "sb_publishable_yLVoioG4a-nA_KkJ1wQzTQ_kr_9WYnH";
 
-    const supabaseClient = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+const $ = id => document.getElementById(id);
+let imagenActual = null;
+let procesando = false;
+
+function mostrarMensaje(id, texto) {
+    $(id).textContent = texto;
+}
+
+function valorNumero(id) {
+    const valor = $(id).value.trim();
+    return valor === "" ? null : Number(valor);
+}
+
+function limpiarFormulario() {
+    $("formProducto").reset();
+    $("productoId").value = "";
+
+    $("disponible").checked = true;
+    $("disponible3ml").checked = true;
+    $("disponible5ml").checked = true;
+    $("disponible10ml").checked = true;
+    $("disponibleFrasco").checked = true;
+
+    $("tituloFormulario").textContent = "Agregar perfume";
+    $("guardarProducto").textContent = "Guardar perfume";
+    $("cancelarEdicion").classList.add("oculto");
+
+    imagenActual = null;
+}
+
+async function mostrarPanel() {
+    const { data, error } = await supabaseClient.auth.getUser();
+
+    alert(
+        error
+            ? "Error de sesión: " + error.message
+            : "UID de tu sesión: " + (data.user ? data.user.id : "SIN SESIÓN")
     );
-supabaseClient.auth.onAuthStateChange((event, session) => {
-    if (event === "PASSWORD_RECOVERY") {
-        document.getElementById("acceso").innerHTML = `
-            <h3>Restablecer contraseña</h3>
-            <p>Ingresa tu nueva contraseña.</p>
 
-            <label for="nuevaContrasena">Nueva contraseña</label>
-            <input id="nuevaContrasena" type="password"
-                autocomplete="new-password"
-                style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box;">
+    $("acceso").classList.add("oculto");
+    $("panelAdmin").classList.remove("oculto");
+    await cargarProductos();
+}
 
-            <label for="confirmarContrasena">Confirmar contraseña</label>
-            <input id="confirmarContrasena" type="password"
-                autocomplete="new-password"
-                style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box;">
+async function cargarProductos() {
+    mostrarMensaje("mensajeLista", "Cargando perfumes...");
 
-            <button id="guardarContrasena" type="button">
-                Guardar nueva contraseña
-            </button>
-
-            <p id="mensajeRecuperacion" role="status"></p>
-        `;
-
-        document.getElementById("guardarContrasena").onclick = async () => {
-            const nueva = document.getElementById("nuevaContrasena").value;
-            const confirmar = document.getElementById("confirmarContrasena").value;
-            const aviso = document.getElementById("mensajeRecuperacion");
-
-            if (nueva.length < 8) {
-                aviso.textContent = "Usa al menos 8 caracteres.";
-                return;
-            }
-
-            if (nueva !== confirmar) {
-                aviso.textContent = "Las contraseñas no coinciden.";
-                return;
-            }
-
-            const { error } = await supabaseClient.auth.updateUser({
-                password: nueva
-            });
-
-            if (error) {
-                aviso.textContent = "Error: " + error.message;
-                return;
-            }
-
-            await supabaseClient.auth.signOut();
-            aviso.textContent = "Contraseña actualizada. Ya puedes iniciar sesión.";
-        };
-    }
-});
-    const boton = document.getElementById("iniciarSesion");
-    
-    const mensaje = document.getElementById("mensaje");
-
-document.getElementById("olvidasteContrasena").addEventListener("click", async (e) => {
-    e.preventDefault();
-
-    const correo = document.getElementById("correo").value.trim();
-
-    if (!correo) {
-        mensaje.textContent = "Escribe tu correo electrónico primero.";
-        return;
-    }
-
-    mensaje.textContent = "Solicitando recuperación...";
-
-    const { error } = await supabaseClient.auth.resetPasswordForEmail(correo, {
-        redirectTo: "https://abanto-fragancias.netlify.app/admin.html"
-    });
+    const { data, error } = await supabaseClient
+        .from("productos")
+        .select("*")
+        .order("created_at", { ascending: false });
 
     if (error) {
-        mensaje.textContent = "No se pudo enviar el correo: " + error.message;
+        mostrarMensaje("mensajeLista", "No se pudieron cargar los productos: " + error.message);
         return;
     }
 
-    mensaje.textContent = "Solicitud enviada. Revisa tu correo y la carpeta de spam.";
+    const lista = $("listaProductos");
+    lista.replaceChildren();
+
+    if (!data || data.length === 0) {
+        mostrarMensaje("mensajeLista", "Todavía no hay perfumes registrados.");
+        return;
+    }
+
+    mostrarMensaje("mensajeLista", "Productos registrados: " + data.length);
+
+    data.forEach(producto => {
+        const tarjeta = document.createElement("article");
+        tarjeta.className = "producto";
+
+        if (producto.imagen_url) {
+            const imagen = document.createElement("img");
+            imagen.src = producto.imagen_url;
+            imagen.alt = producto.nombre || "Perfume";
+            imagen.loading = "lazy";
+            tarjeta.appendChild(imagen);
+        }
+
+        const titulo = document.createElement("h3");
+        titulo.textContent = producto.nombre || "Sin nombre";
+        tarjeta.appendChild(titulo);
+
+        const detalle = document.createElement("p");
+        detalle.textContent =
+            (producto.marca || "") + " · " +
+            (producto.categoria || "") + "\n" +
+            "3 ml: " + (producto.precio_3ml ?? "—") + " S/\n" +
+            "5 ml: " + (producto.precio_5ml ?? "—") + " S/\n" +
+            "10 ml: " + (producto.precio_10ml ?? "—") + " S/\n" +
+            "Frasco: " + (producto.precio_frasco ?? "—") + " S/\n" +
+            "Disponibilidad: " + (producto.disponible ? "Disponible" : "No disponible");
+        tarjeta.appendChild(detalle);
+
+        const editar = document.createElement("button");
+        editar.className = "secundario";
+        editar.textContent = "Editar";
+        editar.addEventListener("click", () => editarProducto(producto));
+        tarjeta.appendChild(editar);
+
+        const eliminar = document.createElement("button");
+        eliminar.className = "peligro";
+        eliminar.textContent = "Eliminar";
+        eliminar.addEventListener("click", () => eliminarProducto(producto));
+        tarjeta.appendChild(eliminar);
+
+        lista.appendChild(tarjeta);
+    });
+}
+
+function editarProducto(p) {
+    $("productoId").value = p.id;
+    $("nombre").value = p.nombre || "";
+    $("marca").value = p.marca || "";
+    $("categoria").value = p.categoria || "Arabe";
+    $("sexo").value = p.sexo || "hombre";
+    $("disponible").checked = p.disponible !== false;
+    $("precio3").value = p.precio_3ml ?? "";
+    $("precio5").value = p.precio_5ml ?? "";
+    $("precio10").value = p.precio_10ml ?? "";
+    $("precioFrasco").value = p.precio_frasco ?? "";
+    $("mlFrasco").value = p.ml_frasco ?? "";
+    $("aroma").value = p.aroma || "";
+    $("estacion").value = p.estacion || "";
+    $("descripcion").value = p.descripcion || "";
+    $("disponible3ml").checked = p.disponible_3ml !== false;
+    $("disponible5ml").checked = p.disponible_5ml !== false;
+    $("disponible10ml").checked = p.disponible_10ml !== false;
+    $("disponibleFrasco").checked = p.disponible_frasco !== false;
+
+    imagenActual = p.imagen_url || null;
+
+    $("tituloFormulario").textContent = "Editar perfume";
+    $("guardarProducto").textContent = "Guardar cambios";
+    $("cancelarEdicion").classList.remove("oculto");
+    mostrarMensaje("mensajeProducto", "Editando: " + (p.nombre || ""));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+async function subirImagen(archivo) {
+    const nombreSeguro = archivo.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const ruta = Date.now() + "-" + nombreSeguro;
+
+    const { error } = await supabaseClient.storage
+        .from("perfumes")
+        .upload(ruta, archivo, { upsert: false });
+
+    if (error) throw error;
+
+    const { data } = supabaseClient.storage
+        .from("perfumes")
+        .getPublicUrl(ruta);
+
+    return data.publicUrl;
+}
+
+$("formProducto").addEventListener("submit", async e => {
+    e.preventDefault();
+    if (procesando) return;
+
+    procesando = true;
+    $("guardarProducto").disabled = true;
+
+    try {
+        mostrarMensaje("mensajeProducto", "Guardando perfume...");
+
+        const { data: sesionData } = await supabaseClient.auth.getSession();
+        console.log("Usuario de sesión:", sesionData.session?.user?.id);
+console.log("Proyecto Supabase:", SUPABASE_URL);
+        if (!sesionData.session) {
+            throw new Error("Tu sesión terminó. Inicia sesión nuevamente.");
+        }
+const presentaciones = [
+    ["disponible3ml", "precio3", "3 ml"],
+    ["disponible5ml", "precio5", "5 ml"],
+    ["disponible10ml", "precio10", "10 ml"],
+    ["disponibleFrasco", "precioFrasco", "frasco completo"]
+];
+
+for (const [casilla, campo, nombre] of presentaciones) {
+    const precio = $(campo).value.trim();
+
+    if ($(casilla).checked && (precio === "" || Number(precio) <= 0)) {
+        throw new Error(
+            `Ingresa un precio mayor que cero para ${nombre} o desmarca su disponibilidad.`
+        );
+    }
+}
+        let imagenUrl = imagenActual;
+        const archivo = $("imagen").files[0];
+
+        if (archivo) {
+            imagenUrl = await subirImagen(archivo);
+        }
+
+        const producto = {
+            nombre: $("nombre").value.trim(),
+            marca: $("marca").value.trim(),
+            categoria: $("categoria").value,
+            sexo: $("sexo").value,
+            descripcion: $("descripcion").value.trim() || null,
+            imagen_url: imagenUrl,
+            precio_3ml: valorNumero("precio3"),
+            precio_5ml: valorNumero("precio5"),
+            precio_10ml: valorNumero("precio10"),
+            precio_frasco: valorNumero("precioFrasco"),
+            ml_frasco: valorNumero("mlFrasco"),
+            aroma: $("aroma").value.trim() || null,
+            estacion: $("estacion").value.trim() || null,
+            disponible: $("disponible").checked,
+            disponible_3ml: $("disponible3ml").checked,
+            disponible_5ml: $("disponible5ml").checked,
+            disponible_10ml: $("disponible10ml").checked,
+            disponible_frasco: $("disponibleFrasco").checked
+        };
+
+        const id = $("productoId").value;
+        let resultado;
+
+        if (id) {
+            resultado = await supabaseClient
+                .from("productos")
+                .update(producto)
+                .eq("id", id);
+        } else {
+            resultado = await supabaseClient
+                .from("productos")
+                .insert(producto);
+        }
+
+        if (resultado.error) throw resultado.error;
+
+        mostrarMensaje("mensajeProducto", id
+            ? "Perfume actualizado correctamente."
+            : "Perfume registrado correctamente.");
+
+        limpiarFormulario();
+        await cargarProductos();
+
+    } catch (error) {
+    mostrarMensaje(
+        "mensajeProducto",
+        "Error: " + error.message +
+        "\nCódigo: " + (error.code || "sin código") +
+        "\nDetalle: " + (error.details || "sin detalle") +
+        "\nSugerencia: " + (error.hint || "sin sugerencia")
+    );
+} finally {
+        procesando = false;
+        $("guardarProducto").disabled = false;
+    }
 });
 
-    boton.addEventListener("click", async () => {
-        const correo = document.getElementById("correo").value.trim();
-        const contrasena = document.getElementById("contrasena").value;
+async function eliminarProducto(producto) {
+    if (!confirm("¿Seguro que deseas eliminar " + producto.nombre + "?")) return;
 
-        if (!correo || !contrasena) {
-            mensaje.textContent = "Ingresa tu correo y contraseña.";
-            return;
-        }
+    const { error } = await supabaseClient
+        .from("productos")
+        .delete()
+        .eq("id", producto.id);
 
-        boton.disabled = true;
-        mensaje.textContent = "Verificando acceso...";
+    if (error) {
+        alert("No se pudo eliminar: " + error.message);
+        return;
+    }
 
-        const { data, error } =
-            await supabaseClient.auth.signInWithPassword({
-                email: correo,
-                password: contrasena
-            });
+    alert("Producto eliminado.");
+    await cargarProductos();
+}
 
-        boton.disabled = false;
+$("cancelarEdicion").addEventListener("click", () => {
+    limpiarFormulario();
+    mostrarMensaje("mensajeProducto", "");
+});
 
-        if (error) {
-            mensaje.textContent =
-                "No se pudo iniciar sesión. Verifica tus datos.";
-            return;
-        }
+$("actualizarLista").addEventListener("click", cargarProductos);
 
-        mensaje.textContent = "Sesión iniciada correctamente.";
-        document.getElementById("acceso").innerHTML =
-            "<h3>Bienvenido al panel de administración</h3>" +
-            "<p>El acceso funciona. Ahora prepararemos la gestión de productos.</p>" +
-            '<button id="cerrarSesion" type="button">Cerrar sesión</button>';
+$("iniciarSesion").addEventListener("click", async () => {
+    const correo = $("correo").value.trim();
+    const contrasena = $("contrasena").value;
 
-        document.getElementById("cerrarSesion")
-            .addEventListener("click", async () => {
-                await supabaseClient.auth.signOut();
-                location.reload();
-            });
+    if (!correo || !contrasena) {
+        mostrarMensaje("mensajeAcceso", "Ingresa tu correo y contraseña.");
+        return;
+    }
+
+    $("iniciarSesion").disabled = true;
+    mostrarMensaje("mensajeAcceso", "Verificando acceso...");
+
+    const { error } = await supabaseClient.auth.signInWithPassword({
+        email: correo,
+        password: contrasena
     });
+
+    $("iniciarSesion").disabled = false;
+
+    if (error) {
+        mostrarMensaje("mensajeAcceso", "No se pudo iniciar sesión: " + error.message);
+        return;
+    }
+
+    await mostrarPanel();
+});
+
+$("cerrarSesion").addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+    location.reload();
+});
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+    if (event === "SIGNED_OUT") {
+        $("panelAdmin").classList.add("oculto");
+        $("acceso").classList.remove("oculto");
+    }
+});
+
+(async () => {
+    const { data } = await supabaseClient.auth.getSession();
+    if (data.session) await mostrarPanel();
+})();
 </script>
 </body>
 </html>
