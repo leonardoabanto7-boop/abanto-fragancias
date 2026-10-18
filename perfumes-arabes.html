@@ -416,11 +416,9 @@
 
     </a>
 
-<a class="producto-arabe producto-agotado"
+<a class="producto-arabe"
 
        href="producto.html?producto=9-pm-elixir"
-
-       data-agotado="true"
 
        data-sexo="hombre mujer"
 
@@ -435,8 +433,6 @@
         <div class="producto-imagen">
 
             <img src="img/productos/13. 9 pm elixir.png" alt="9 pm Elixir">
-
-            <span class="etiqueta-agotado">AGOTADO</span>
 
         </div>
 
@@ -498,11 +494,9 @@
 
 </a>
 
-<a class="producto-arabe producto-agotado"
+<a class="producto-arabe"
 
    href="producto.html?producto=nitro-red-intensely"
-
-   data-agotado="true"
 
    data-sexo="hombre"
 
@@ -518,8 +512,6 @@
 
         <img src="img/productos/20. Nitro Red Intensely.png" alt="Nitro Red Intensely">
 
-        <span class="etiqueta-agotado">AGOTADO</span>
-
     </div>
 
     <h3>Nitro Red Intensely</h3>
@@ -528,11 +520,10 @@
 
 </a>
 
-<a class="producto-arabe producto-agotado"
+<a class="producto-arabe"
 
    href="producto.html?producto=9-pm-night-out"
 
-   data-agotado="true"
 
    data-sexo="hombre"
 
@@ -547,8 +538,6 @@
     <div class="producto-imagen">
 
         <img src="img/productos/14. 9 pm night Out.png" alt="9 PM Night Out">
-
-        <span class="etiqueta-agotado">AGOTADO</span>
 
     </div>
 
@@ -584,11 +573,9 @@
 
 </a>
 
-<a class="producto-arabe producto-agotado"
+<a class="producto-arabe"
 
    href="producto.html?producto=hawas-la-mer"
-
-   data-agotado="true"
 
    data-sexo="hombre"
 
@@ -604,7 +591,6 @@
 
         <img src="img/productos/18. Hawas La Mer.png" alt="Hawas La Mer">
 
-        <span class="etiqueta-agotado">AGOTADO</span>
 
     </div>
 
@@ -666,11 +652,9 @@
 
 </a>
 
-<a class="producto-arabe producto-agotado"
+<a class="producto-arabe"
 
    href="producto.html?producto=honor-glory"
-
-   data-agotado="true"
 
    data-sexo="hombre mujer"
 
@@ -685,8 +669,6 @@
     <div class="producto-imagen">
 
         <img src="img/productos/16. Honor & Glory.png" alt="Honor & Glory">
-
-        <span class="etiqueta-agotado">AGOTADO</span>
 
     </div>
 
@@ -1053,45 +1035,90 @@ document.addEventListener("DOMContentLoaded", () => {
         if (mensajeVacio) mensajeVacio.hidden = cantidadVisible !== 0;
     }
 
-    async function cargarDatos() {
-        try {
-            const url = "https://vvntaanbzaqlkretstrg.supabase.co/rest/v1/productos?select=*&disponible=eq.true";
-            const respuesta = await fetch(url, {
-                headers: { apikey: "sb_publishable_yLVoioG4a-nA_KkJ1wQzTQ_kr_9WYnH" },
-                cache: "no-store"
-            });
-            if (!respuesta.ok) throw new Error(`Supabase respondió ${respuesta.status}`);
-            const todos = await respuesta.json();
-            const categoriaActual = "arabe";
-            filasDB = todos.filter(p => normalizar(p.categoria).includes(categoriaActual));
-            actualizarOpcionesMarca();
+  
 
-            filasDB.forEach(p => {
-                const existente = productos.find(card =>
-                    nombreClave(card.querySelector("h3")?.textContent) === nombreClave(p.nombre)
-                );
-                if (existente) {
-                    actualizarTarjeta(existente, p);
-                } else {
-                    const nueva = crearTarjeta(p);
-                    contenedor.insertBefore(nueva, mensajeVacio || null);
-                }
-            });
+async function cargarDatos() {
+    try {
+        const url = "https://vvntaanbzaqlkretstrg.supabase.co/rest/v1/productos?select=*&categoria=ilike.*arabe*";
 
-            productos = [...contenedor.querySelectorAll(".producto-arabe")];
-            // Los perfumes guardados en Supabase mandan sobre los atributos escritos a mano.
-            productos.forEach(card => {
-                const p = filasDB.find(row =>
-                    nombreClave(row.nombre) === nombreClave(card.querySelector("h3")?.textContent)
-                );
-                if (p) actualizarTarjeta(card, p);
-            });
-        } catch (error) {
-            console.error("No se pudieron cargar los perfumes y filtros:", error);
-        } finally {
-            aplicarFiltros();
+        const respuesta = await fetch(url, {
+            headers: {
+                apikey: "sb_publishable_yLVoioG4a-nA_KkJ1wQzTQ_kr_9WYnH"
+            },
+            cache: "no-store"
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Supabase respondió ${respuesta.status}`);
         }
+
+        const todos = await respuesta.json();
+
+        filasDB = todos.filter(p =>
+            normalizar(p.categoria).includes("arabe")
+        );
+
+        actualizarOpcionesMarca();
+
+        productos.forEach(card => {
+            const p = filasDB.find(row =>
+                nombreClave(row.nombre) ===
+                nombreClave(card.querySelector("h3")?.textContent)
+            );
+
+            if (!p) return;
+
+            actualizarTarjeta(card, p);
+
+            const agotado = p.disponible !== true;
+
+            card.classList.toggle("agotado", agotado);
+            card.setAttribute("data-agotado", String(agotado));
+
+            let etiqueta = card.querySelector(".etiqueta-agotado");
+
+            if (agotado) {
+                if (!etiqueta) {
+                    etiqueta = document.createElement("span");
+                    etiqueta.className = "etiqueta-agotado";
+                    etiqueta.textContent = "AGOTADO";
+
+                    const imagen = card.querySelector(".producto-imagen");
+                    if (imagen) imagen.appendChild(etiqueta);
+                }
+
+                card.removeAttribute("href");
+                card.setAttribute("aria-disabled", "true");
+                card.style.cursor = "not-allowed";
+            } else {
+                if (etiqueta) etiqueta.remove();
+
+                card.removeAttribute("data-agotado");
+                card.removeAttribute("aria-disabled");
+                card.style.cursor = "";
+            }
+        });
+
+        filasDB.forEach(p => {
+            const existente = productos.find(card =>
+                nombreClave(card.querySelector("h3")?.textContent) ===
+                nombreClave(p.nombre)
+            );
+
+            if (!existente) {
+                const nueva = crearTarjeta(p);
+                contenedor.insertBefore(nueva, mensajeVacio || null);
+            }
+        });
+
+        productos = [...contenedor.querySelectorAll(".producto-arabe")];
+
+    } catch (error) {
+        console.error("No se pudieron cargar los perfumes:", error);
+    } finally {
+        aplicarFiltros();
     }
+}
 
     if (botonLimpiar) {
         botonLimpiar.addEventListener("click", () => {

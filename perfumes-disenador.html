@@ -311,34 +311,61 @@ document.addEventListener("DOMContentLoaded", () => {
         return candidatos.length ? Math.min(...candidatos) : 0;
     }
 
-    function actualizarTarjeta(card, p) {
-        card.dataset.sexo = tokens(p.sexo).map(slug).join(" ");
-        card.dataset.precio = String(valorPrecio(p));
-        card.dataset.marca = slug(p.marca);
-        card.dataset.estacion = tokens(p.estacion).map(slug).join(" ");
-        card.dataset.aroma = tokens(p.aroma).map(slug).join(" ");
+    
+function actualizarTarjeta(card, p) {
+    card.dataset.sexo = tokens(p.sexo).map(slug).join(" ");
+    card.dataset.precio = String(valorPrecio(p));
+    card.dataset.marca = slug(p.marca);
+    card.dataset.estacion = tokens(p.estacion).map(slug).join(" ");
+    card.dataset.aroma = tokens(p.aroma).map(slug).join(" ");
 
-        const titulo = card.querySelector("h3");
-        if (titulo && p.nombre) titulo.textContent = p.nombre;
+    const titulo = card.querySelector("h3");
+    if (titulo && p.nombre) titulo.textContent = p.nombre;
 
-        const precioEl = card.querySelector("p");
-        if (precioEl && valorPrecio(p) > 0) precioEl.textContent = `Desde S/ ${valorPrecio(p)}`;
+    const precioEl = card.querySelector("p");
+    if (precioEl && valorPrecio(p) > 0) {
+        precioEl.textContent = `Desde S/ ${valorPrecio(p)}`;
+    }
 
-        const img = card.querySelector(".producto-imagen img");
-        if (img && p.imagen_url) {
-            img.src = p.imagen_url;
-            img.alt = p.nombre || "";
-        } else if (!img && p.imagen_url) {
-            const box = card.querySelector(".producto-imagen");
-            if (box) {
-                const nueva = document.createElement("img");
-                nueva.src = p.imagen_url;
-                nueva.alt = p.nombre || "";
-                nueva.loading = "lazy";
-                box.appendChild(nueva);
-            }
+    const img = card.querySelector(".producto-imagen img");
+    if (img && p.imagen_url) {
+        img.src = p.imagen_url;
+        img.alt = p.nombre || "";
+    } else if (!img && p.imagen_url) {
+        const box = card.querySelector(".producto-imagen");
+        if (box) {
+            const nueva = document.createElement("img");
+            nueva.src = p.imagen_url;
+            nueva.alt = p.nombre || "";
+            nueva.loading = "lazy";
+            box.appendChild(nueva);
         }
     }
+
+    const agotado = p.disponible === false;
+    card.classList.toggle("agotado", agotado);
+    card.dataset.agotado = String(agotado);
+
+    let etiqueta = card.querySelector(".etiqueta-agotado");
+
+    if (agotado) {
+        if (!etiqueta) {
+            etiqueta = document.createElement("span");
+            etiqueta.className = "etiqueta-agotado";
+            etiqueta.textContent = "AGOTADO";
+            card.querySelector(".producto-imagen")?.appendChild(etiqueta);
+        }
+
+        card.removeAttribute("href");
+        card.setAttribute("aria-disabled", "true");
+        card.style.cursor = "not-allowed";
+    } else {
+        etiqueta?.remove();
+        card.href = `producto.html?producto=${encodeURIComponent(slug(p.nombre))}`;
+        card.removeAttribute("aria-disabled");
+        card.style.cursor = "";
+    }
+}
 
     function crearTarjeta(p) {
         const card = document.createElement("a");
@@ -364,6 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const price = document.createElement("p");
         price.textContent = valorPrecio(p) > 0 ? `Desde S/ ${valorPrecio(p)}` : "Consultar precio";
         card.append(box, h3, price);
+        actualizarTarjeta(card, p);
         return card;
     }
 
@@ -429,45 +457,40 @@ document.addEventListener("DOMContentLoaded", () => {
         if (mensajeVacio) mensajeVacio.hidden = cantidadVisible !== 0;
     }
 
-    async function cargarDatos() {
-        try {
-            const url = "https://vvntaanbzaqlkretstrg.supabase.co/rest/v1/productos?select=*&disponible=eq.true";
-            const respuesta = await fetch(url, {
-                headers: { apikey: "sb_publishable_yLVoioG4a-nA_KkJ1wQzTQ_kr_9WYnH" },
-                cache: "no-store"
-            });
-            if (!respuesta.ok) throw new Error(`Supabase respondió ${respuesta.status}`);
-            const todos = await respuesta.json();
-            const categoriaActual = "disenador";
-            filasDB = todos.filter(p => normalizar(p.categoria).includes(categoriaActual));
-            actualizarOpcionesMarca();
+        async function cargarDatos() {
+            try {
+                const url = "https://vvntaanbzaqlkretstrg.supabase.co/rest/v1/productos?select=*&categoria=eq.Diseñador";
+                const respuesta = await fetch(url, {
+                    headers: { apikey: "sb_publishable_yLVoioG4a-nA_KkJ1wQzTQ_kr_9WYnH" },
+                    cache: "no-store"
+                });
+                if (!respuesta.ok) throw new Error(`Supabase respondió ${respuesta.status}`);
 
-            filasDB.forEach(p => {
-                const existente = productos.find(card =>
-                    nombreClave(card.querySelector("h3")?.textContent) === nombreClave(p.nombre)
-                );
-                if (existente) {
-                    actualizarTarjeta(existente, p);
-                } else {
-                    const nueva = crearTarjeta(p);
-                    contenedor.insertBefore(nueva, mensajeVacio || null);
-                }
-            });
+                const todos = await respuesta.json();
+                console.log("Productos recibidos de Supabase:", todos);
+console.log("Categorías recibidas:", todos.map(p => ({ nombre: p.nombre, categoria: p.categoria, disponible: p.disponible })));
+                filasDB = todos.filter(p => normalizar(p.categoria).includes("disenador"));
+                actualizarOpcionesMarca();
 
-            productos = [...contenedor.querySelectorAll(".producto-arabe")];
-            // Los perfumes guardados en Supabase mandan sobre los atributos escritos a mano.
-            productos.forEach(card => {
-                const p = filasDB.find(row =>
-                    nombreClave(row.nombre) === nombreClave(card.querySelector("h3")?.textContent)
-                );
-                if (p) actualizarTarjeta(card, p);
-            });
-        } catch (error) {
-            console.error("No se pudieron cargar los perfumes y filtros:", error);
-        } finally {
-            aplicarFiltros();
+                // Sincroniza cada perfume existente con el estado actual de Supabase.
+                filasDB.forEach(p => {
+                    let card = productos.find(c =>
+                        nombreClave(c.querySelector("h3")?.textContent) === nombreClave(p.nombre)
+                    );
+
+                    if (!card) {
+                        card = crearTarjeta(p);
+                        contenedor.insertBefore(card, mensajeVacio || null);
+                    } else {
+                        actualizarTarjeta(card, p);
+                    }
+                });
+            } catch (error) {
+                console.error("No se pudieron cargar los perfumes:", error);
+            } finally {
+                aplicarFiltros();
+            }
         }
-    }
 
     if (botonLimpiar) {
         botonLimpiar.addEventListener("click", () => {

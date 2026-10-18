@@ -13,7 +13,6 @@ const perfumes = {
             "5 ml": 30,
             "10 ml": 45
         },
-        agotados: ["3 ml", "5 ml", "10 ml"],
         precioCompleto: 220
     },
 
@@ -119,7 +118,6 @@ const perfumes = {
             "5 ml": 30,
             "10 ml": 55
         },
-        agotados: ["3 ml", "5 ml", "10 ml"],
         precioCompleto: 410
     },
 
@@ -135,7 +133,6 @@ const perfumes = {
             "5 ml": 40,
             "10 ml": 60
         },
-        agotados: ["3 ml", "5 ml", "10 ml"],
         precioCompleto: 480
     },
 
@@ -151,7 +148,6 @@ const perfumes = {
             "5 ml": 40,
             "10 ml": 60
         },
-        agotados: ["3 ml", "5 ml", "10 ml"],
         precioCompleto: 400
     },
 
@@ -167,7 +163,6 @@ const perfumes = {
             "5 ml": 55,
             "10 ml": 90
         },
-        agotados: ["3 ml", "5 ml", "10 ml"],
                 precioCompleto: 820
     },
 
@@ -220,7 +215,6 @@ precioCompleto: 180
     "5 ml": 25,
     "10 ml": 35
 },
-agotados: ["3 ml", "5 ml", "10 ml"],
 precioCompleto: 180
     },
 
@@ -234,7 +228,6 @@ precioCompleto: 180
     "5 ml": 25,
     "10 ml": 35
 },
-agotados: ["3 ml", "5 ml", "10 ml"],
 precioCompleto: 180
     },
 
@@ -248,7 +241,6 @@ precioCompleto: 180
     "5 ml": 25,
     "10 ml": 35
 },
-agotados: ["3 ml", "5 ml", "10 ml"],
 precioCompleto: 180
     },
 
@@ -262,7 +254,6 @@ precioCompleto: 180
     "5 ml": 25,
     "10 ml": 35
 },
-agotados: ["3 ml", "5 ml", "10 ml"],
 precioCompleto: 180
     },
 
@@ -276,7 +267,6 @@ precioCompleto: 180
     "5 ml": 25,
     "10 ml": 35
 },
-agotados: ["3 ml", "5 ml", "10 ml"],
 precioCompleto: 180
     },
 
@@ -290,7 +280,6 @@ precioCompleto: 180
     "5 ml": 25,
     "10 ml": 35
 },
-agotados: ["3 ml", "5 ml", "10 ml"],
 precioCompleto: 180
     },
 
@@ -356,7 +345,6 @@ precioCompleto: 180
     "5 ml": 25,
     "10 ml": 35
 },
-agotados: ["3 ml", "5 ml", "10 ml"],
 precioCompleto: 180
     },
 
@@ -395,7 +383,6 @@ precioCompleto: 180
         "5 ml": 25,
         "10 ml": 35
     },
-    agotados: ["3 ml", "5 ml", "10 ml"],
     precioCompleto: 190
 }
 
@@ -431,11 +418,19 @@ if (enlaceVolver) {
         .replace(/^-|-$/g, "");
 
     try {
-        let lista = [];
+    let lista = [];
+
+    try {
+        lista = JSON.parse(
+            sessionStorage.getItem("productosSupabase") || "[]"
+        );
+    } catch {
+        lista = [];
+    }
 
 
 const respuesta = await fetch(
-    "https://vvntaanbzaqlkretstrg.supabase.co/rest/v1/productos?select=*&disponible=eq.true",
+    "https://vvntaanbzaqlkretstrg.supabase.co/rest/v1/productos?select=*",
     {
         headers: {
             apikey: "sb_publishable_yLVoioG4a-nA_KkJ1wQzTQ_kr_9WYnH"
@@ -458,6 +453,8 @@ sessionStorage.setItem(
         const encontrado = lista.find(p =>
             normalizar(p.nombre) === normalizar(productoId)
         );
+        console.log("IMÁGENES RECIBIDAS:", encontrado?.imagenes);
+console.log("IMAGEN PRINCIPAL:", encontrado?.imagen_url);
 
         if (!encontrado) {
             document.querySelector(".ficha-producto").innerHTML =
@@ -502,17 +499,19 @@ document.querySelector(".ficha-producto").style.display = "grid";
         let indiceFoto = 0;
 
         function mostrarFoto() {
-            if (!perfume.imagenes.length) {
-                foto.removeAttribute("src");
-                numeroFoto.textContent = "Sin imagen";
-                return;
-            }
+    if (!perfume.imagenes.length) {
+        foto.removeAttribute("src");
+        numeroFoto.textContent = "Sin imagen";
+        return;
+    }
+    foto.src = perfume.imagenes[indiceFoto];
+    foto.alt = perfume.nombre;
+    numeroFoto.textContent =
+        `${indiceFoto + 1} / ${perfume.imagenes.length}`;
 
-            foto.src = perfume.imagenes[indiceFoto];
-            foto.alt = perfume.nombre;
-            numeroFoto.textContent =
-                `${indiceFoto + 1} / ${perfume.imagenes.length}`;
-        }
+    anterior.style.display = perfume.imagenes.length > 1 ? "" : "none";
+    siguiente.style.display = perfume.imagenes.length > 1 ? "" : "none";
+}
 
         anterior.addEventListener("click", () => {
             if (!perfume.imagenes.length) return;
