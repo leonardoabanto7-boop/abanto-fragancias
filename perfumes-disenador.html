@@ -42,7 +42,7 @@
 
                     <a href="perfumes-disenador.html">Diseñador</a>
 
-                    <a href="producto.html?producto=xerjoff-erba-pura">Nicho</a>
+                    <a href="producto.html?producto=erba-pura">Nicho</a>
 
                 </div>
 
@@ -459,7 +459,7 @@ function actualizarTarjeta(card, p) {
 
         async function cargarDatos() {
             try {
-                const url = "https://vvntaanbzaqlkretstrg.supabase.co/rest/v1/productos?select=*&categoria=eq.Diseñador";
+                const url = "https://vvntaanbzaqlkretstrg.supabase.co/rest/v1/productos?select=*";
                 const respuesta = await fetch(url, {
                     headers: { apikey: "sb_publishable_yLVoioG4a-nA_KkJ1wQzTQ_kr_9WYnH" },
                     cache: "no-store"
@@ -467,6 +467,7 @@ function actualizarTarjeta(card, p) {
                 if (!respuesta.ok) throw new Error(`Supabase respondió ${respuesta.status}`);
 
                 const todos = await respuesta.json();
+                
                 console.log("Productos recibidos de Supabase:", todos);
 console.log("Categorías recibidas:", todos.map(p => ({ nombre: p.nombre, categoria: p.categoria, disponible: p.disponible })));
                 filasDB = todos.filter(p => normalizar(p.categoria).includes("disenador"));
@@ -485,6 +486,7 @@ console.log("Categorías recibidas:", todos.map(p => ({ nombre: p.nombre, catego
                         actualizarTarjeta(card, p);
                     }
                 });
+                                productos = [...contenedor.querySelectorAll(".producto-arabe")];
             } catch (error) {
                 console.error("No se pudieron cargar los perfumes:", error);
             } finally {

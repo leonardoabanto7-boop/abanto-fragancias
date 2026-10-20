@@ -37,7 +37,7 @@
         <div class="submenu">
           <a href="perfumes-arabes.html">Árabes</a>
           <a href="perfumes-disenador.html">Diseñador</a>
-          <a href="producto.html?producto=xerjoff-erba-pura">Nicho</a>
+          <a href="producto.html?producto=erba-pura">Nicho</a>
         </div>
       </div>
 
@@ -89,7 +89,7 @@
   <h2>Perfumes Árabes</h2>
 </section>
 
-<section class="productos-arabes">
+<section class="productos-arabes" id="inicio-arabes">
 
   <a class="producto-arabe" href="producto.html?producto=bharara-king">
   <div class="producto-imagen">
@@ -160,7 +160,7 @@
     <h2>Perfumes de Diseñador</h2>
 </section>
 
-<section class="productos-disenador">
+<section class="productos-disenador" id="inicio-disenador">
 
     <!-- PERFUME 1: STRONGER WITH YOU INTENSELY -->
     <a class="producto-arabe" href="producto.html?producto=stronger-with-you-intensely">
@@ -423,5 +423,104 @@
 <script src="js/menu-movil.js"></script>
 <script src="js/galeria-clientes.js"></script>
 <script src="js/videos.js"></script>
+
+<script>
+(async function actualizarInicio() {
+    const SUPABASE_URL = "https://vvntaanbzaqlkretstrg.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_yLVoioG4a-nA_KkJ1wQzTQ_kr_9WYnH";
+
+    try {
+        const respuesta = await fetch(
+            `${SUPABASE_URL}/rest/v1/productos?select=*&disponible=eq.true`,
+            {
+                headers: { apikey: SUPABASE_KEY },
+                cache: "no-store"
+            }
+        );
+
+        if (!respuesta.ok) throw new Error("No se pudieron cargar los perfumes");
+
+        const productos = await respuesta.json();
+
+        const secciones = [
+    {
+        categoria: "arabe",
+        contenedor: document.querySelector(".productos-arabes"),
+        limite: 7
+    },
+    {
+        categoria: "disenador",
+        contenedor: document.querySelector(".productos-disenador"),
+        limite: 3
+    },
+    {
+        categoria: "nicho",
+        contenedor: document.querySelector(".productos-nicho"),
+        limite: 3
+    }
+];
+
+        const normalizar = texto => (texto || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim()
+            .toLowerCase();
+
+        secciones.forEach(({ categoria, contenedor, limite }) => {
+            if (!contenedor) return;
+
+            const disponibles = productos.filter(p =>
+                normalizar(p.categoria).includes(categoria)
+            );
+
+            const verTodos = contenedor.querySelector(".ver-todos-arabes");
+            contenedor.querySelectorAll(".producto-arabe").forEach(tarjeta => tarjeta.remove());
+
+            disponibles.slice(0, limite).forEach(p => {
+                const tarjeta = document.createElement("a");
+                tarjeta.className = "producto-arabe";
+
+                const slug = normalizar(p.nombre)
+                    .replace(/[^a-z0-9]+/g, "-")
+                    .replace(/^-|-$/g, "");
+
+                tarjeta.href = `producto.html?producto=${encodeURIComponent(slug)}`;
+
+                const imagen = document.createElement("div");
+                imagen.className = "producto-imagen";
+
+                const img = document.createElement("img");
+                img.src = p.imagen_url || (Array.isArray(p.imagenes) ? p.imagenes[0] : "");
+                img.alt = p.nombre || "Perfume";
+                img.loading = "lazy";
+                imagen.appendChild(img);
+
+                const nombre = document.createElement("h3");
+                nombre.textContent = p.nombre || "";
+
+                const precio = document.createElement("p");
+                const precios = [
+                    p.precio_3ml,
+                    p.precio_5ml,
+                    p.precio_10ml,
+                    p.precio_frasco
+                ].filter(v => v !== null && v !== "" && Number(v) > 0);
+
+                precio.textContent = precios.length
+                    ? `Desde S/ ${Math.min(...precios.map(Number))}`
+                    : "";
+
+                tarjeta.append(imagen, nombre, precio);
+
+                if (verTodos) contenedor.insertBefore(tarjeta, verTodos);
+                else contenedor.appendChild(tarjeta);
+            });
+        });
+    } catch (error) {
+        console.error("Error actualizando el inicio:", error);
+    }
+})();
+</script>
+
 </body>
 </html>

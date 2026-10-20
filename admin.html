@@ -236,38 +236,60 @@ $("imagen").addEventListener("change", () => {
     mostrarVistaPrevia();
 });
 
+
+
 function mostrarVistaPrevia() {
     const contenedor = $("vistaPreviaImagenes");
     contenedor.replaceChildren();
 
-    archivosOrdenados.forEach((archivo, indice) => {
+    const imagenesGuardadas = Array.isArray(imagenActual)
+        ? imagenActual
+        : imagenActual ? [imagenActual] : [];
+
+    const usarNuevas = archivosOrdenados.length > 0;
+    const lista = usarNuevas ? archivosOrdenados : imagenesGuardadas;
+
+    lista.forEach((elemento, indice) => {
         const fila = document.createElement("div");
+        fila.style.display = "flex";
+        fila.style.alignItems = "center";
+        fila.style.gap = "10px";
+        fila.style.marginBottom = "8px";
+
         const imagen = document.createElement("img");
-        imagen.src = URL.createObjectURL(archivo);
+        imagen.src = usarNuevas
+            ? URL.createObjectURL(elemento)
+            : elemento;
         imagen.style.width = "70px";
         imagen.style.height = "70px";
         imagen.style.objectFit = "contain";
 
         const texto = document.createElement("span");
-        texto.textContent = ` Imagen ${indice + 1}: ${archivo.name} `;
+        texto.textContent = usarNuevas
+            ? `Imagen ${indice + 1}: ${elemento.name}`
+            : `Imagen guardada ${indice + 1}`;
 
         const arriba = document.createElement("button");
         arriba.type = "button";
         arriba.textContent = "↑";
         arriba.disabled = indice === 0;
         arriba.onclick = () => {
-            [archivosOrdenados[indice - 1], archivosOrdenados[indice]] =
-                [archivosOrdenados[indice], archivosOrdenados[indice - 1]];
+            [lista[indice - 1], lista[indice]] =
+                [lista[indice], lista[indice - 1]];
+
+            if (!usarNuevas) imagenActual = lista;
             mostrarVistaPrevia();
         };
 
         const abajo = document.createElement("button");
         abajo.type = "button";
         abajo.textContent = "↓";
-        abajo.disabled = indice === archivosOrdenados.length - 1;
+        abajo.disabled = indice === lista.length - 1;
         abajo.onclick = () => {
-            [archivosOrdenados[indice], archivosOrdenados[indice + 1]] =
-                [archivosOrdenados[indice + 1], archivosOrdenados[indice]];
+            [lista[indice], lista[indice + 1]] =
+                [lista[indice + 1], lista[indice]];
+
+            if (!usarNuevas) imagenActual = lista;
             mostrarVistaPrevia();
         };
 
@@ -275,6 +297,8 @@ function mostrarVistaPrevia() {
         contenedor.appendChild(fila);
     });
 }
+
+
 function mostrarMensaje(id, texto) {
     $(id).textContent = texto;
 }
@@ -440,6 +464,9 @@ if ($("agotadoGeneral")) {
     : p.imagen_url
         ? [p.imagen_url]
         : [];
+        archivosOrdenados = [];
+$("imagen").value = "";
+mostrarVistaPrevia();
 
     $("tituloFormulario").textContent = "Editar perfume";
     $("guardarProducto").textContent = "Guardar cambios";

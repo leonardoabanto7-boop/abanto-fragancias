@@ -400,7 +400,7 @@ const productosDisenador = [
 ];
 
 if (enlaceVolver) {
-    if (productoId === "xerjoff-erba-pura") {
+    if (productoId === "erba-pura") {
         enlaceVolver.href = "index.html";
     } else if (productosDisenador.includes(productoId)) {
         enlaceVolver.href = "perfumes-disenador.html";
