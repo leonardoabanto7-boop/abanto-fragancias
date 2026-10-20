@@ -94,14 +94,15 @@
                             <option value="Nicho">Nicho</option>
                         </select>
                     </div>
-                    <div>
-                        <label for="sexo">Público</label>
-                        <select id="sexo">
-                            <option value="hombre">Hombre</option>
-                            <option value="mujer">Mujer</option>
-                            <option value="unisex">Unisex</option>
-                        </select>
-                    </div>
+                    
+<div>
+    <label>Público</label>
+    <div id="opcionesSexo">
+        <label><input type="checkbox" name="sexo" value="hombre"> Hombre</label>
+        <label><input type="checkbox" name="sexo" value="mujer"> Mujer</label>
+    </div>
+</div>
+
                     <div>
                         <label for="precio3">Precio decant 3 ml (S/)</label>
                         <input id="precio3" type="number" min="0" step="0.01">
@@ -398,7 +399,12 @@ function editarProducto(p) {
     $("nombre").value = p.nombre || "";
     $("marca").value = p.marca || "";
     $("categoria").value = p.categoria || "Arabe";
-    $("sexo").value = p.sexo || "hombre";
+    document.querySelectorAll('input[name="sexo"]').forEach(casilla => {
+    casilla.checked = (p.sexo || "hombre")
+        .split(",")
+        .map(valor => valor.trim().toLowerCase())
+        .includes(casilla.value.toLowerCase());
+});
     $("precio3").value = p.precio_3ml ?? "";
     $("precio5").value = p.precio_5ml ?? "";
     $("precio10").value = p.precio_10ml ?? "";
@@ -524,7 +530,9 @@ for (const [casilla, campo, nombre] of presentaciones) {
             nombre: $("nombre").value.trim(),
             marca: $("marca").value.trim(),
             categoria: $("categoria").value,
-            sexo: $("sexo").value,
+            sexo: Array.from(
+    document.querySelectorAll('input[name="sexo"]:checked')
+).map(casilla => casilla.value).join(", ") || null,
             descripcion: $("descripcion").value.trim() || null,
             imagen_url: imagenesUrls[0] || null,
             imagenes: imagenesUrls,
